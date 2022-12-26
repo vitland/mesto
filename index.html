@@ -4,9 +4,37 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./pages/index.css">
   <title>Место</title>
 </head>
 <body>
-  
+  <div class="main">
+    <header class="header main__header">
+      <img src="./images/mesto-logo.svg" alt="логотип место" class="logo header__logo">
+      <div class="header__line"></div>
+    </header>
+    <main class="content">
+      <section class="profile">
+        <img src="./images/avatar.jpg" alt="фото Жак-Ив Кусто" class="profile__avatar">
+        <div class="profile__info">
+          <p class="profile__name">Жак-Ив Кусто</p>
+          <p class="profile__occupation"Исследователь океана</p>
+        </div>
+        <button class="profile__add-button"><img src="./images/plus_icon.svg" alt=""></button>
+      </section>
+      <section class="elements">
+        <article class="element">
+          <img src="" alt="" class="element__image">
+          <div class="element__description">
+            <p class="element__text">Карачаевск</p>
+            <img src="./images/heart_icon.svg" alt="" class="element__fav">
+          </div>
+        </article>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__copyright">&copy;2020 Mesto Russia</p>
+    </footer>
+  </div>
 </body>
 </html>
