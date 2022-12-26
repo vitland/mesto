@@ -1,0 +1,8 @@
+.profile {
+  width: 100%;
+  max-width: 880px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(min-content, max-content)) auto;
+  color: #fff;
+  gap: 25px;
+}

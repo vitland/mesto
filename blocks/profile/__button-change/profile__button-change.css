@@ -1,0 +1,10 @@
+.profile__button-change{
+  margin-top: 32px;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  background-color: #000;
+  border: 1px solid #fff;
+  align-self: flex-start;
+  box-sizing: border-box;
+}

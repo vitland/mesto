@@ -3,8 +3,19 @@
 /* main */
 @import url(../blocks/main/main.css);
 @import url(../blocks/main/__header/main__header.css);
+@import url(../blocks/main/__profile/main__profile.css);
+/* content */
+@import url(../blocks/content/content.css);
 /* header */
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__line/header__line.css);
 /* logo */
 @import url(../blocks/logo/logo.css);
+/* profile */
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__button-add/profile__button-add.css);
+@import url(../blocks/profile/__button-change/profile__button-change.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__info/profile__info.css);
+@import url(../blocks/profile/__name/profile__name.css);
+@import url(../blocks/profile/__occupation/profile__occupation.css);
