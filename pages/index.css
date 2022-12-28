@@ -19,3 +19,11 @@
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__occupation/profile__occupation.css);
+/* elements */
+@import url(../blocks/elements/elements.css);
+/* element */
+@import url(../blocks/element/element.css);
+@import url(../blocks/element/__description/element__description.css);
+@import url(../blocks/element/__fav/element__fav.css);
+@import url(../blocks/element/__image/element__image.css);
+@import url(../blocks/element/__text/element__text.css);
