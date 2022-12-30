@@ -1,0 +1,9 @@
+.popup__close-icon{
+  position: sticky;
+  top: 16%;
+  left: 67.5%;
+}
+
+.popup__close-icon:hover{
+  cursor: pointer;
+}

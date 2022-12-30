@@ -8,3 +8,7 @@
   align-self: flex-start;
   box-sizing: border-box;
 }
+
+.profile__button-change:hover{
+  cursor: pointer;
+}
