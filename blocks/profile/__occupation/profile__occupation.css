@@ -3,4 +3,11 @@
   font-size: 18px;
   line-height: 1.2;
   font-weight: 400;
+  grid-area: occup;
+}
+
+@media screen and (max-width: 420px) {
+  .profile__occupation{
+    font-size: 14px;
+  }
 }

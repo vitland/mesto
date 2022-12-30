@@ -13,3 +13,11 @@
 .popup__submit:hover{
   cursor: pointer;
 }
+
+@media screen and (max-width:520px){
+.popup__submit{
+  width: 238px;
+  height: 46px;
+  margin-top: 15px;
+}
+}

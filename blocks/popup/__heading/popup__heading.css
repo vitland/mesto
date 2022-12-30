@@ -5,3 +5,11 @@
   line-height: 1.2;
   align-self: flex-start;
 }
+
+@media screen and (max-width:520px){
+  .popup__heading{
+    font-size: 18px;
+    white-space: nowrap;
+    align-self: center;
+  }
+}

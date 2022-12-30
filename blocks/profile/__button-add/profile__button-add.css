@@ -5,11 +5,12 @@
   border: 1px solid #fff;
   background-color: #000;
   place-self: center end;
+  grid-column: 4;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 720px) {
   .profile__button-add {
-    max-width: 100px;
-    max-height: 35px;
+    width: 282px;
+    margin-top: 13.5px;
   }
 }

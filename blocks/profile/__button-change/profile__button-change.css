@@ -1,14 +1,21 @@
-.profile__button-change{
-  margin-top: 32px;
+.profile__button-change {
+  grid-area: icon;
+  place-self: center;
+  margin: 5px 0 0 25px;
   padding: 0;
   width: 24px;
   height: 24px;
   background-color: #000;
   border: 1px solid #fff;
-  align-self: flex-start;
   box-sizing: border-box;
 }
 
-.profile__button-change:hover{
+.profile__button-change:hover {
   cursor: pointer;
+}
+
+@media screen and (max-width: 720px) {
+  .profile__button-change {
+ margin: 0 0 5px 15.25px;
+  }
 }
