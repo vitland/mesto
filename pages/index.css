@@ -27,6 +27,7 @@
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/__description/element__description.css);
 @import url(../blocks/element/__fav/element__fav.css);
+@import url(../blocks/element/__fav/_active/element__fav_active.css);
 @import url(../blocks/element/__image/element__image.css);
 @import url(../blocks/element/__text/element__text.css);
 /* footer */
