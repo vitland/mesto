@@ -8,99 +8,139 @@
     <title>Место</title>
   </head>
   <body>
-    <div class="main">
-      <header class="header main__header">
+    <div class="content">
+      <header class="header content__header">
         <img
           src="./images/mesto-logo.svg"
           alt="логотип место"
           class="logo header__logo"
         />
-        <div class="header__line"></div>
       </header>
-      <main class="content">
-        <section class="profile main__profile">
+      <main class="main">
+        <section class="profile content__profile">
           <img
             src="./images/avatar.jpg"
             alt="фото Жак-Ив Кусто"
             class="profile__avatar"
           />
           <div class="profile__info">
-            <p class="profile__name">Жак-Ив Кусто</p>
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
             <p class="profile__occupation">Исследователь океана</p>
-            <button class="profile__button-change opacity">
+            <button type="button" class="profile__button-change opacity">
               <img src="./images/pen_icon.svg" alt="иконка ручка" />
             </button>
           </div>
-            <img class="profile__button-add opacity" src="./images/plus_icon.svg" alt="иконка плюс" />
+          <button type="button" class="profile__button-add opacity"></button>
         </section>
         <section class="elements">
           <article class="element">
-            <img src="./images/kara-1.jpg" alt="церковь горы Карачаево-черкессия" class="element__image" />
+            <img
+              src="./images/kara-1.jpg"
+              alt="церковь горы Карачаево-черкессия"
+              class="element__image"
+            />
             <div class="element__description">
               <h2 class="element__text">Карачаево-черкессия</h2>
-              <img src="./images/heart_icon.svg" alt="иконка сердце" class="element__fav element__fav_active opacity" />
-              <img src="./images/heart_icon_active.svg" alt="иконка сердце отмечено" class="element__fav opacity" />
+              <button
+                type="button"
+                class="element__fav element__fav opacity"
+              ></button>
             </div>
           </article>
           <article class="element">
-            <img src="./images/elb-1.jpg" alt="Советская многоэтажка на фоне горы" class="element__image" />
+            <img
+              src="./images/elb-1.jpg"
+              alt="Советская многоэтажка на фоне горы"
+              class="element__image"
+            />
             <div class="element__description">
               <h2 class="element__text">Гора Эльбрус</h2>
-              <img src="./images/heart_icon.svg" alt="иконка сердце" class="element__fav element__fav_active opacity" />
-              <img src="./images/heart_icon_active.svg" alt="иконка сердце отмечено" class="element__fav opacity" />
+              <button
+                type="button"
+                class="element__fav element__fav opacity"
+              ></button>
             </div>
           </article>
           <article class="element">
-            <img src="./images/domb-1.jpg" alt="человек на берегу горной реки снимает летящий вертолет" class="element__image" />
+            <img
+              src="./images/domb-1.jpg"
+              alt="человек на берегу горной реки снимает летящий вертолет"
+              class="element__image"
+            />
             <div class="element__description">
               <h2 class="element__text">Домбай</h2>
-              <img src="./images/heart_icon.svg" alt="иконка сердце" class="element__fav element__fav_active opacity" />
-              <img src="./images/heart_icon_active.svg" alt="иконка сердце отмечено" class="element__fav opacity" />
+              <button
+                type="button"
+                class="element__fav element__fav opacity"
+              ></button>
             </div>
           </article>
           <article class="element">
-            <img src="./images/elb-2.jpg" alt="горный хребет на закате" class="element__image" />
+            <img
+              src="./images/elb-2.jpg"
+              alt="горный хребет на закате"
+              class="element__image"
+            />
             <div class="element__description">
               <h2 class="element__text">Гора Эльбрус</h2>
-              <img src="./images/heart_icon.svg" alt="иконка сердце" class="element__fav element__fav_active opacity" />
-              <img src="./images/heart_icon_active.svg" alt="иконка сердце отмечено" class="element__fav opacity" />
+              <button
+                type="button"
+                class="element__fav element__fav opacity"
+              ></button>
             </div>
           </article>
           <article class="element">
-            <img src="./images/domb-2.jpg" alt="горный перевал осенью" class="element__image" />
+            <img
+              src="./images/domb-2.jpg"
+              alt="горный перевал осенью"
+              class="element__image"
+            />
             <div class="element__description">
               <h2 class="element__text">Домбай</h2>
-              <img src="./images/heart_icon.svg" alt="иконка сердце" class="element__fav element__fav_active opacity" />
-              <img src="./images/heart_icon_active.svg" alt="иконка сердце отмечено" class="element__fav opacity" />
+              <button
+                type="button"
+                class="element__fav element__fav opacity"
+              ></button>
             </div>
           </article>
           <article class="element">
-            <img src="./images/kara-2.jpg" alt="горы в тумане" class="element__image" />
+            <img
+              src="./images/kara-2.jpg"
+              alt="горы в тумане"
+              class="element__image"
+            />
             <div class="element__description">
               <h2 class="element__text">Карачаевск</h2>
-              <img src="./images/heart_icon.svg" alt="иконка сердце" class="element__fav element__fav_active opacity" />
-              <img src="./images/heart_icon_active.svg" alt="иконка сердце отмечено" class="element__fav opacity" />
+              <button
+                type="button"
+                class="element__fav element__fav_active opacity"
+              ></button>
             </div>
           </article>
         </section>
-        <div class="popup">
-          <form class="popup__container">
-            <img id="close" src="./images/close_icon.svg" alt="иконка крестик" class="popup__close-icon opacity">
-            <h2 class="popup__heading">Редактировать профиль</h2>
-            <label>
-              <input type="text" name="name" class="popup__input">
-            </label>
-            <label>
-              <input type="text" name="occupation" class="popup__input">
-            </label>
-            <input type="submit" value="Сохранить" class="popup__submit opacity">
-          </form>
-        </div>
       </main>
-      <footer class="footer main__footer">
+      <footer class="footer content__footer">
         <p class="footer__copyright">&copy;2020 Mesto Russia</p>
       </footer>
+      <div class="popup">
+        <div class="popup__container">
+          <button class="popup__close-icon opacity"></button>
+          <h2 class="popup__heading">Редактировать профиль</h2>
+          <form class="popup__form" name="form-popup">         
+            <label>
+              <input type="text" name="name" class="popup__input popup__input_type_name" />
+            </label>
+            <label>
+              <input type="text" name="occupation" class="popup__input popup__input_type_occupation" />
+            </label>
+            <button
+            type="submit"
+            class="popup__submit opacity"
+            >Сохранить</button>
+          </form>
+        </div>
+      </div>
     </div>
-    <script src="./index.js"></script>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>

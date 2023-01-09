@@ -1,9 +1,0 @@
-.main__footer {
-  margin: 67px 0 60px;
-}
-
-@media screen and (max-width: 350px) {
-  .main__footer {
-    margin: 50px 0 36px;
-  }
-}

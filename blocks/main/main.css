@@ -1,11 +1,8 @@
-.main {
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
-  max-width: 100vw;
-  min-width: 320px;
-  background-color: #000000;
+.main{
+  max-width: 880px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  position: relative;
 }

@@ -1,5 +1,12 @@
 .element__fav{
-  display: none;
-  width: 22px;
-  height: 19px;
+  min-width: 22px;
+  min-height: 19px;
+  padding: 0;
+  background-image: url('../../../images/heart_icon.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+  box-sizing: border-box;
+  display: block;
 }
