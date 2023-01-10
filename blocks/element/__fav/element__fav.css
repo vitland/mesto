@@ -1,7 +1,9 @@
-.element__fav{
+.element__fav {
   min-width: 22px;
   min-height: 19px;
   padding: 0;
+  background-color: transparent;
+
   background-image: url('../../../images/heart_icon.svg');
   background-position: center;
   background-repeat: no-repeat;
