@@ -5,13 +5,14 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(min-content, max-content)) auto;
   color: #fff;
-  gap: 25px;
+  gap: 30px;
   box-sizing: border-box;
 }
 
-@media screen and (max-width: 876px) {
+@media screen and (max-width: 879px) {
   .profile {
     padding: 0 27px;
+    gap: 15px;
   }
 }
 
@@ -25,8 +26,8 @@
   }
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 320px) {
   .profile {
-    gap: 28px;
+    gap: 22px;
   }
 }

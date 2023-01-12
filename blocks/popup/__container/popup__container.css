@@ -1,9 +1,7 @@
 .popup__container {
-  margin: 0 auto;
   padding: 36px;
   box-sizing: border-box;
-  position: sticky;
-  top: 25%;
+  position: relative;
   width: 430px;
   height: 330px;
   background-color: #fff;
@@ -17,7 +15,7 @@
 
 @media screen and (max-width: 520px) {
   .popup__container {
-    padding: 22px 25px;
+    padding: 25px 17px;
     width: 282px;
     height: 322px;
     gap: 50px;
