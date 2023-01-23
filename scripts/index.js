@@ -41,9 +41,7 @@ const elementsArr = [
 ];
 
 function populateElements(name, url) {
-  const elementTemplate = document.querySelector(
-    ".elements__template"
-  ).content;
+  const elementTemplate = document.querySelector(".elements__template").content;
   const element = elementTemplate.querySelector(".element").cloneNode(true);
 
   element.querySelector(".element__image").src = url;
@@ -52,7 +50,7 @@ function populateElements(name, url) {
   elementsContainer.prepend(element);
 }
 
-elementsArr.forEach((place) => populateElements(place.name, place.url))
+elementsArr.forEach((place) => populateElements(place.name, place.url));
 
 function closePopup() {
   popUpProfile.classList.remove("popup_opened");
@@ -74,13 +72,31 @@ function submit(e) {
   e.preventDefault();
   closePopup();
   if (e.currentTarget.className.includes("type_profile")) {
-    console.log(e.currentTarget.className)
+    console.log(e.currentTarget.className);
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
   }
 
-  if (e.currentTarget.className.includes("type_place") && placeNameInput && placeImageInput) {
-    populateElements(placeNameInput.value, placeImageInput.value)
+  if (
+    e.currentTarget.className.includes("type_place") &&
+    placeNameInput &&
+    placeImageInput
+  ) {
+    populateElements(placeNameInput.value, placeImageInput.value);
+    placeNameInput.value = ''
+    placeImageInput.value = ''
+  }
+}
+
+function removePlace(e) {
+  if (e.target.className.includes('bin')) {
+    e.target.parentElement.remove()
+  }
+}
+
+function likePlace(e) {
+  if (e.target.className.includes('fav')) {
+    e.target.classList.toggle("element__fav_active");
   }
 }
 
@@ -88,3 +104,5 @@ popupCloseBtns.forEach((btn) => btn.addEventListener("click", closePopup));
 changeProfileBtn.addEventListener("click", openPopup);
 addPlaceBtn.addEventListener("click", openPopup);
 popupForm.forEach((btn) => btn.addEventListener("submit", submit));
+elementsContainer.addEventListener("click", likePlace);
+elementsContainer.addEventListener("click", removePlace);
