@@ -1,77 +1,146 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8"/>
-  <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <link href="./pages/index.css" rel="stylesheet"/>
-  <title>Место</title>
-</head>
-<body>
-<div class="content">
-  <header class="header content__header">
-    <img
-      alt="логотип место"
-      class="logo header__logo"
-      src="./images/mesto-logo.svg"
-    />
-  </header>
-  <main class="main">
-    <section class="profile content__profile">
-      <img
-        alt="фото Жак-Ив Кусто"
-        class="profile__avatar"
-        src="./images/avatar.jpg"
-      />
-      <div class="profile__info">
-        <h1 class="profile__name">Жак-Ив Кусто</h1>
-        <p class="profile__occupation">Исследователь океана</p>
-        <button class="profile__button-change opacity" type="button">
-          <img alt="иконка ручка" src="./images/pen_icon.svg"/>
-        </button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./pages/index.css" />
+    <title>Место</title>
+  </head>
+  <body>
+    <div class="content">
+      <header class="header content__header">
+        <img
+          src="./images/mesto-logo.svg"
+          alt="логотип место"
+          class="logo header__logo"
+        />
+      </header>
+      <main class="main">
+        <section class="profile content__profile">
+          <img
+            src="./images/avatar.jpg"
+            alt="фото Жак-Ив Кусто"
+            class="profile__avatar"
+          />
+          <div class="profile__info">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <p class="profile__occupation">Исследователь океана</p>
+            <button type="button" class="profile__button-change opacity">
+              <img src="./images/pen_icon.svg" alt="иконка ручка" />
+            </button>
+          </div>
+          <button type="button" class="profile__button-add opacity"></button>
+        </section>
+        <section class="elements">
+          <article class="element">
+            <img
+              src="./images/kara-1.jpg"
+              alt="церковь горы Карачаево-черкессия"
+              class="element__image"
+            />
+            <div class="element__description">
+              <h2 class="element__text">Карачаево-черкессия</h2>
+              <button
+                type="button"
+                class="element__fav opacity"
+              ></button>
+            </div>
+          </article>
+          <article class="element">
+            <img
+              src="./images/elb-1.jpg"
+              alt="Советская многоэтажка на фоне горы"
+              class="element__image"
+            />
+            <div class="element__description">
+              <h2 class="element__text">Гора Эльбрус</h2>
+              <button
+                type="button"
+                class="element__fav opacity"
+              ></button>
+            </div>
+          </article>
+          <article class="element">
+            <img
+              src="./images/domb-1.jpg"
+              alt="человек на берегу горной реки снимает летящий вертолет"
+              class="element__image"
+            />
+            <div class="element__description">
+              <h2 class="element__text">Домбай</h2>
+              <button
+                type="button"
+                class="element__fav opacity"
+              ></button>
+            </div>
+          </article>
+          <article class="element">
+            <img
+              src="./images/elb-2.jpg"
+              alt="горный хребет на закате"
+              class="element__image"
+            />
+            <div class="element__description">
+              <h2 class="element__text">Гора Эльбрус</h2>
+              <button
+                type="button"
+                class="element__fav opacity"
+              ></button>
+            </div>
+          </article>
+          <article class="element">
+            <img
+              src="./images/domb-2.jpg"
+              alt="горный перевал осенью"
+              class="element__image"
+            />
+            <div class="element__description">
+              <h2 class="element__text">Домбай</h2>
+              <button
+                type="button"
+                class="element__fav opacity"
+              ></button>
+            </div>
+          </article>
+          <article class="element">
+            <img
+              src="./images/kara-2.jpg"
+              alt="горы в тумане"
+              class="element__image"
+            />
+            <div class="element__description">
+              <h2 class="element__text">Карачаевск</h2>
+              <button
+                type="button"
+                class="element__fav element__fav_active opacity"
+              ></button>
+            </div>
+          </article>
+        </section>
+      </main>
+      <footer class="footer content__footer">
+        <p class="footer__copyright">&copy;2020 Mesto Russia</p>
+      </footer>
+      <div class="popup">
+        <div class="popup__container">
+          <button type="button" class="popup__close-icon opacity"></button>
+          <h2 class="popup__heading">Редактировать профиль</h2>
+          <form class="popup__form" name="form-popup">         
+            <label>
+              <input type="text" name="name" class="popup__input popup__input_type_name" />
+            </label>
+            <label>
+              <input type="text" name="occupation" class="popup__input popup__input_type_occupation" />
+            </label>
+            <button
+            type="submit"
+            class="popup__submit opacity"
+            >Сохранить</button>
+          </form>
+        </div>
       </div>
-      <button class="profile__button-add opacity" type="button"></button>
-    </section>
-    <section class="elements"></section>
-  </main>
-  <footer class="footer content__footer">
-    <p class="footer__copyright">&copy;2020 Mesto Russia</p>
-  </footer>
-  <div class="popup">
-    <div class="popup__container">
-      <button class="popup__close-icon opacity" type="button"></button>
-      <h2 class="popup__heading">Редактировать профиль</h2>
-      <form class="popup__form" name="form-popup">
-        <label>
-          <input
-            class="popup__input popup__input_type_name"
-            name="name"
-            type="text"
-          />
-        </label>
-        <label>
-          <input
-            class="popup__input popup__input_type_occupation"
-            name="occupation"
-            type="text"
-          />
-        </label>
-        <button class="popup__submit opacity" type="submit">
-          Сохранить
-        </button>
-      </form>
     </div>
-  </div>
-  <template class="elements__template">
-    <article class="element">
-      <img alt="" class="element__image" src=""/>
-      <div class="element__description">
-        <h2 class="element__text"></h2>
-        <button class="element__fav opacity" type="button"></button>
-      </div>
-    </article>
-  </template>
-</div>
-<script src="./scripts/index.js"></script>
-</body>
+    <script src="./scripts/index.js"></script>
+  </body>
 </html>
