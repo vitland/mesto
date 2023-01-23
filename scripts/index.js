@@ -1,13 +1,17 @@
-const closeIcon = document.querySelector(".popup__close-icon");
-const popUp = document.querySelector(".popup");
+const popupCloseBtns = document.querySelectorAll(".popup__close-icon");
+const popUpProfile = document.querySelector(".popup_type_profile");
 const profileName = document.querySelector(".profile__name");
-const profileOccupation = document.querySelector(".profile__occupation");
-const submitForm = document.querySelector(".popup__form");
-const changeIcon = document.querySelector(".profile__button-change");
+const profileJob = document.querySelector(".profile__occupation");
+const popUpPlace = document.querySelector(".popup_type_place");
+const placeNameInput = document.querySelector(".popup__input_type_place-name");
+const placeImageInput = document.querySelector(".popup__input_type_place-image");
+const popupForm = document.querySelectorAll(".popup__form");
+
+const changeProfileBtn = document.querySelector(".profile__button-change");
+const addPlaceBtn = document.querySelector(".profile__button-add");
 const nameInput = document.querySelector(".popup__input_type_name");
 const jobInput = document.querySelector(".popup__input_type_occupation");
 const elementsContainer = document.querySelector(".elements");
-
 
 const elementsArr = [
   {
@@ -36,39 +40,51 @@ const elementsArr = [
   },
 ];
 
-function populateElements(elementsArr) {
-  elementsArr.forEach((place) => {
-    const elementTemplate = document.querySelector(
-      ".elements__template"
-    ).content;
-    const element = elementTemplate.querySelector(".element").cloneNode(true);
-    element.querySelector(".element__image").src = place.url;
-    element.querySelector(".element__image").alt = place.name;
-    element.querySelector(".element__text").textContent = place.name;
+function populateElements(name, url) {
+  const elementTemplate = document.querySelector(
+    ".elements__template"
+  ).content;
+  const element = elementTemplate.querySelector(".element").cloneNode(true);
 
-    elementsContainer.append(element);
-  });
+  element.querySelector(".element__image").src = url;
+  element.querySelector(".element__image").alt = name;
+  element.querySelector(".element__text").textContent = name;
+  elementsContainer.prepend(element);
 }
 
-populateElements(elementsArr);
+elementsArr.forEach((place) => populateElements(place.name, place.url))
 
 function closePopup() {
-  popUp.classList.remove("popup_opened");
+  popUpProfile.classList.remove("popup_opened");
+  popUpPlace.classList.remove("popup_opened");
 }
 
-function openPopup() {
-  popUp.classList.add("popup_opened");
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileOccupation.textContent;
+function openPopup(e) {
+  if (e.currentTarget.className.includes("button-change")) {
+    popUpProfile.classList.add("popup_opened");
+    nameInput.value = profileName.textContent;
+    jobInput.value = profileJob.textContent;
+  }
+  if (e.currentTarget.className.includes("button-add")) {
+    popUpPlace.classList.add("popup_opened");
+  }
 }
 
 function submit(e) {
   e.preventDefault();
   closePopup();
-  profileName.textContent = nameInput.value;
-  profileOccupation.textContent = jobInput.value;
+  if (e.currentTarget.className.includes("type_profile")) {
+    console.log(e.currentTarget.className)
+    profileName.textContent = nameInput.value;
+    profileJob.textContent = jobInput.value;
+  }
+
+  if (e.currentTarget.className.includes("type_place") && placeNameInput && placeImageInput) {
+    populateElements(placeNameInput.value, placeImageInput.value)
+  }
 }
 
-closeIcon.addEventListener("click", closePopup);
-changeIcon.addEventListener("click", openPopup);
-submitForm.addEventListener("submit", submit);
+popupCloseBtns.forEach((btn) => btn.addEventListener("click", closePopup));
+changeProfileBtn.addEventListener("click", openPopup);
+addPlaceBtn.addEventListener("click", openPopup);
+popupForm.forEach((btn) => btn.addEventListener("submit", submit));
