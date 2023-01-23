@@ -1,8 +1,10 @@
+const popupPlace = document.querySelector(".popup_type_place");
+const popupProfile = document.querySelector(".popup_type_profile");
+const popupImage = document.querySelector(".popup_type_image");
+
 const popupCloseBtns = document.querySelectorAll(".popup__close-icon");
-const popUpProfile = document.querySelector(".popup_type_profile");
 const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__occupation");
-const popUpPlace = document.querySelector(".popup_type_place");
 const placeNameInput = document.querySelector(".popup__input_type_place-name");
 const placeImageInput = document.querySelector(".popup__input_type_place-image");
 const popupForm = document.querySelectorAll(".popup__form");
@@ -27,12 +29,12 @@ const elementsArr = [
     url: "https://i.ibb.co/wWLHmvH/krasnoyarsk.jpg",
   },
   {
-    name: "Москва",
-    url: "https://i.ibb.co/NxXrbCV/moscow.jpg",
-  },
-  {
     name: "Сочи",
     url: "https://i.ibb.co/brGLRJ6/sochi.jpg",
+  },
+  {
+    name: "Москва",
+    url: "https://i.ibb.co/NxXrbCV/moscow.jpg",
   },
   {
     name: "Сочи, дендрарий",
@@ -54,18 +56,24 @@ function populateElements(name, url) {
 elementsArr.forEach((place) => populateElements(place.name, place.url));
 
 function closePopup() {
-  popUpProfile.classList.remove("popup_opened");
-  popUpPlace.classList.remove("popup_opened");
+  popupProfile.classList.remove("popup_opened");
+  popupPlace.classList.remove("popup_opened");
+  popupImage.classList.remove("popup_opened")
 }
 
 function openPopup(e) {
+  if (e.target.className.includes('element__image')) {
+    popupImage.classList.add("popup_opened")
+    popupImage.querySelector('.popup__image').src = e.target.src
+    popupImage.querySelector('.popup__image-caption').textContent = e.target.parentElement.textContent
+  }
   if (e.currentTarget.className.includes("button-change")) {
-    popUpProfile.classList.add("popup_opened");
+    popupProfile.classList.add("popup_opened");
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
   }
   if (e.currentTarget.className.includes("button-add")) {
-    popUpPlace.classList.add("popup_opened");
+    popupPlace.classList.add("popup_opened");
   }
 }
 
@@ -106,4 +114,5 @@ addPlaceBtn.addEventListener("click", openPopup);
 popupForm.forEach((btn) => btn.addEventListener("submit", submit));
 elementsContainer.addEventListener("click", likePlace);
 elementsContainer.addEventListener("click", removePlace);
+elementsContainer.addEventListener("click", openPopup);
 
