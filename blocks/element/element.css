@@ -1,4 +1,5 @@
-.element{
+.element {
+  position: relative;
   max-width: 282px;
   max-height: 361px;
   display: flex;
