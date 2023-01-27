@@ -19,45 +19,33 @@ const placeNameInput = document.querySelector(".popup__input_type_place-name");
 const placeImageInput = document.querySelector(".popup__input_type_place-image");
 
 const elementsContainer = document.querySelector(".elements");
-const elementsArr = [
-  {
-    name: "Домбай",
-    url: "https://i.ibb.co/1m7JJCD/dombai.jpg",
-  },
-  {
-    name: "Эльбрус",
-    url: "https://i.ibb.co/2NmW2cp/elbrus.jpg",
-  },
-  {
-    name: "Красноярск",
-    url: "https://i.ibb.co/wWLHmvH/krasnoyarsk.jpg",
-  },
-  {
-    name: "Сочи",
-    url: "https://i.ibb.co/brGLRJ6/sochi.jpg",
-  },
-  {
-    name: "Москва",
-    url: "https://i.ibb.co/NxXrbCV/moscow.jpg",
-  },
-  {
-    name: "Сочи, дендрарий",
-    url: "https://i.ibb.co/TKL1Bnf/sochi2.jpg",
-  },
-];
+const elementsArr = [{
+  name: "Домбай", url: "https://i.ibb.co/1m7JJCD/dombai.jpg",
+}, {
+  name: "Эльбрус", url: "https://i.ibb.co/2NmW2cp/elbrus.jpg",
+}, {
+  name: "Красноярск", url: "https://i.ibb.co/wWLHmvH/krasnoyarsk.jpg",
+}, {
+  name: "Сочи", url: "https://i.ibb.co/brGLRJ6/sochi.jpg",
+}, {
+  name: "Москва", url: "https://i.ibb.co/NxXrbCV/moscow.jpg",
+}, {
+  name: "Сочи, дендрарий", url: "https://i.ibb.co/TKL1Bnf/sochi2.jpg",
+},];
+const elementTemplate = document.querySelector(".elements__template").content.querySelector(".element");
 
-function populateElements(name, url) {
-  const elementTemplate = document.querySelector(
-    ".elements__template"
-  ).content;
-  const element = elementTemplate.querySelector(".element").cloneNode(true);
+function populateElements(places) {
+  const elements = places.map((place) => createElement(place))
+  elementsContainer.append(...elements);
+}
+
+function createElement({name, url}) {
+  const element = elementTemplate.cloneNode(true);
   element.querySelector(".element__image").src = url;
   element.querySelector(".element__image").alt = name;
   element.querySelector(".element__text").textContent = name;
-  elementsContainer.prepend(element);
+  return element
 }
-
-elementsArr.forEach((place) => populateElements(place.name, place.url));
 
 function closePopup() {
   popupProfile.classList.remove("popup_opened");
@@ -78,7 +66,7 @@ function openPopup(e) {
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
   }
-  //Открытие попап с новым местом
+  //Открытие попапа с новым местом
   if (e.currentTarget.className.includes("button-add")) {
     popupPlace.classList.add("popup_opened");
   }
@@ -93,12 +81,11 @@ function submit(e) {
     profileJob.textContent = jobInput.value;
   }
   //Сохранение места
-  if (
-    e.currentTarget.className.includes("type_place") &&
-    placeNameInput &&
-    placeImageInput
-  ) {
-    populateElements(placeNameInput.value, placeImageInput.value);
+  if (e.currentTarget.className.includes("type_place") && placeNameInput && placeImageInput) {
+    //Добавление нового места
+    const element = createElement({name: placeNameInput.value, url: placeImageInput.value})
+    elementsContainer.prepend(element)
+    //Очистка полей
     placeNameInput.value = ''
     placeImageInput.value = ''
   }
@@ -115,6 +102,8 @@ function likePlace(e) {
     e.target.classList.toggle("element__fav_active");
   }
 }
+
+populateElements(elementsArr)
 
 //Обработчик на все кнопки закрытия
 popupCloseBtns.forEach((btn) => btn.addEventListener("click", closePopup));
