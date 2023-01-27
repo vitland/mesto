@@ -5,7 +5,10 @@
   padding: 0;
   width: 24px;
   height: 24px;
+  background: url("../../../images/pen_icon.svg");
   background-color: #000;
+  background-repeat: no-repeat;
+  background-position: center;
   border: 1px solid #fff;
   box-sizing: border-box;
   display: flex;

@@ -6,17 +6,22 @@ const popupImage = document.querySelector(".popup_type_image");
 const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__occupation");
 
-//Кнопки и форма попап профиля
-const popupCloseBtns = document.querySelectorAll(".popup__close-icon");
+//Кнопка и форма попап профиля
+const popupProfileCloseBtn = document.querySelector(".popup__close-icon_type_profile");
 const changeProfileBtn = document.querySelector(".profile__button-change");
-const popupForm = document.querySelectorAll(".popup__form");
+const profileForm = document.querySelector(".popup__form_type_profile");
 const nameInput = document.querySelector(".popup__input_type_name");
 const jobInput = document.querySelector(".popup__input_type_occupation");
-
 // Кнопка и инпуты попап новое место
 const addPlaceBtn = document.querySelector(".profile__button-add");
+const popupPlaceCloseBtn = document.querySelector(".popup__close-icon_type_place");
+const placeForm = document.querySelector(".popup__form_type_place");
 const placeNameInput = document.querySelector(".popup__input_type_place-name");
 const placeImageInput = document.querySelector(".popup__input_type_place-image");
+
+const elementImage = popupImage.querySelector('.popup__image')
+const elementImageCaption = popupImage.querySelector('.popup__image-caption')
+const popupImageCloseBtn = document.querySelector(".popup__close-icon_type_image");
 
 const elementsContainer = document.querySelector(".elements");
 const elementsArr = [{
@@ -44,76 +49,83 @@ function createElement({name, url}) {
   element.querySelector(".element__image").src = url;
   element.querySelector(".element__image").alt = name;
   element.querySelector(".element__text").textContent = name;
+
+  //Слушатель на удаление
+  element.querySelector(".element__bin").addEventListener('click', () => {
+    removePlace(element)
+  })
+  //Слушатель на лайк
+  element.querySelector(".element__fav").addEventListener("click", likePlace)
+  //Слушатель на открытие картинки
+  element.querySelector('.element__image').addEventListener("click", openImagePopup)
+
   return element
 }
 
-function closePopup() {
-  popupProfile.classList.remove("popup_opened");
-  popupPlace.classList.remove("popup_opened");
-  popupImage.classList.remove("popup_opened")
+function closePopup(popup) {
+  popup.classList.remove("popup_opened")
 }
 
-function openPopup(e) {
-  //Открытие попапа с картинкой
-  if (e.target.className.includes('element__image')) {
-    popupImage.classList.add("popup_opened")
-    popupImage.querySelector('.popup__image').src = e.target.src
-    popupImage.querySelector('.popup__image-caption').textContent = e.target.parentElement.textContent
-  }
-  //Открытие попапа с профилем
-  if (e.currentTarget.className.includes("button-change")) {
-    popupProfile.classList.add("popup_opened");
-    nameInput.value = profileName.textContent;
-    jobInput.value = profileJob.textContent;
-  }
-  //Открытие попапа с новым местом
-  if (e.currentTarget.className.includes("button-add")) {
-    popupPlace.classList.add("popup_opened");
-  }
+function openPopup(popup) {
+  popup.classList.add("popup_opened")
 }
 
-function submit(e) {
-  e.preventDefault();
-  closePopup();
-  //Сохранение профиля
-  if (e.currentTarget.className.includes("type_profile")) {
-    profileName.textContent = nameInput.value;
-    profileJob.textContent = jobInput.value;
-  }
-  //Сохранение места
-  if (e.currentTarget.className.includes("type_place") && placeNameInput && placeImageInput) {
-    //Добавление нового места
-    const element = createElement({name: placeNameInput.value, url: placeImageInput.value})
-    elementsContainer.prepend(element)
-    //Очистка полей
-    placeNameInput.value = ''
-    placeImageInput.value = ''
-  }
+function openProfilePopup() {
+  openPopup(popupProfile)
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
 }
 
-function removePlace(e) {
-  if (e.target.className.includes('bin')) {
-    e.target.parentElement.remove()
-  }
+function openPlacePopup() {
+  openPopup(popupPlace)
 }
 
-function likePlace(e) {
-  if (e.target.className.includes('fav')) {
-    e.target.classList.toggle("element__fav_active");
-  }
+function openImagePopup(evt) {
+  openPopup(popupImage)
+  elementImage.src = evt.target.src
+  elementImageCaption.textContent = evt.target.parentElement.textContent
+}
+
+function submitProfile(evt) {
+  evt.preventDefault();
+  closePopup(popupProfile);
+  profileName.textContent = nameInput.value;
+  profileJob.textContent = jobInput.value;
+}
+
+function submitPlace(evt) {
+  evt.preventDefault();
+  closePopup(popupPlace);
+  const element = createElement({name: placeNameInput.value, url: placeImageInput.value})
+  elementsContainer.prepend(element)
+  placeNameInput.value = ''
+  placeImageInput.value = ''
+}
+
+function removePlace(element) {
+  element.remove()
+}
+
+function likePlace(evt) {
+  evt.target.classList.toggle("element__fav_active");
 }
 
 populateElements(elementsArr)
 
 //Обработчик на все кнопки закрытия
-popupCloseBtns.forEach((btn) => btn.addEventListener("click", closePopup));
+popupProfileCloseBtn.addEventListener("click", () => {
+  closePopup(popupProfile)
+})
+popupPlaceCloseBtn.addEventListener("click", () => {
+  closePopup(popupPlace)
+})
+popupImageCloseBtn.addEventListener("click", () => {
+  closePopup(popupImage)
+})
 
-changeProfileBtn.addEventListener("click", openPopup);
-addPlaceBtn.addEventListener("click", openPopup);
+changeProfileBtn.addEventListener("click", openProfilePopup);
+addPlaceBtn.addEventListener("click", openPlacePopup);
 
 //Обработчик на все кнопки сохранить
-popupForm.forEach((btn) => btn.addEventListener("submit", submit));
-
-elementsContainer.addEventListener("click", likePlace);
-elementsContainer.addEventListener("click", removePlace);
-elementsContainer.addEventListener("click", openPopup);
+profileForm.addEventListener("submit", submitProfile)
+placeForm.addEventListener("submit", submitPlace)
