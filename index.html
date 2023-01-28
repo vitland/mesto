@@ -41,20 +41,18 @@
       <button class="popup__close-icon popup__close-icon_type_profile opacity" type="button"></button>
       <h2 class="popup__heading">Редактировать профиль</h2>
       <form class="popup__form popup__form_type_profile" name="form-popup">
-        <label>
           <input
             class="popup__input popup__input_type_name"
             name="name"
             type="text"
+            placeholder="Имя"
           />
-        </label>
-        <label>
           <input
             class="popup__input popup__input_type_occupation"
             name="occupation"
             type="text"
+            placeholder="О себе"
           />
-        </label>
         <button class="popup__submit opacity" type="submit">
           Сохранить
         </button>
@@ -66,22 +64,18 @@
       <button class="popup__close-icon popup__close-icon_type_place opacity" type="button"></button>
       <h2 class="popup__heading">Новое место</h2>
       <form class="popup__form popup__form_type_place" name="form-popup">
-        <label>
           <input
             class="popup__input popup__input_type_place-name"
             name="place-name"
             placeholder="Название места"
             type="text"
           />
-        </label>
-        <label>
           <input
             class="popup__input popup__input_type_place-image"
             name="place-image"
             placeholder="Ссылка на изображение"
             type="url"
           />
-        </label>
         <button class="popup__submit opacity" type="submit">
           Добавить
         </button>
@@ -106,6 +100,7 @@
     </article>
   </template>
 </div>
+<script src="./scripts/cards.js"></script>
 <script src="./scripts/index.js"></script>
 </body>
 </html>
