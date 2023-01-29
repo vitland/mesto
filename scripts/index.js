@@ -32,9 +32,9 @@ function populateElements(places) {
 
 function createElement({name, link}) {
   const element = elementTemplate.cloneNode(true);
-  const elementImage = element.querySelector(".element__image")
-  elementImage.src = link;
-  elementImage.alt = name;
+  const image = element.querySelector(".element__image")
+  image.src = link;
+  image.alt = name;
   element.querySelector(".element__text").textContent = name;
 
   //Слушатель на удаление
