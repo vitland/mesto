@@ -40,20 +40,26 @@
     <div class="popup__container">
       <button class="popup__close-icon popup__close-icon_type_profile opacity" type="button"></button>
       <h2 class="popup__heading">Редактировать профиль</h2>
-      <form class="popup__form popup__form_type_profile" name="form-popup">
+      <form class="form form_type_profile" name="form-popup" novalidate>
+        <fieldset class="form__set">
           <input
-            class="popup__input popup__input_type_name"
+            class="form__input form__input_type_name"
             name="name"
             type="text"
             placeholder="Имя"
+            required
           />
+          <span class="form__input-error name-input-error">ошибка</span>
           <input
-            class="popup__input popup__input_type_occupation"
+            class="form__input form__input_type_occupation"
             name="occupation"
             type="text"
             placeholder="О себе"
+            required
           />
-        <button class="popup__submit opacity" type="submit">
+          <span class="form__input-error job-input-error"></span>
+        </fieldset>
+        <button class="form__submit opacity" type="submit">
           Сохранить
         </button>
       </form>
@@ -63,20 +69,26 @@
     <div class="popup__container">
       <button class="popup__close-icon popup__close-icon_type_place opacity" type="button"></button>
       <h2 class="popup__heading">Новое место</h2>
-      <form class="popup__form popup__form_type_place" name="form-popup">
+      <form class="form form_type_place" name="form-popup" novalidate>
+        <fieldset class="form__set">
           <input
-            class="popup__input popup__input_type_place-name"
+            class="form__input form__input_type_place-name"
             name="place-name"
             placeholder="Название места"
             type="text"
+            required
           />
+          <span class="form__input-error job-input-error"></span>
           <input
-            class="popup__input popup__input_type_place-image"
+            class="form__input form__input_type_place-image"
             name="place-image"
             placeholder="Ссылка на изображение"
             type="url"
+            required
           />
-        <button class="popup__submit opacity" type="submit">
+          <span class="form__input-error job-input-error"></span>
+        </fieldset>
+        <button class="form__submit opacity" type="submit">
           Добавить
         </button>
       </form>
@@ -102,5 +114,6 @@
 </div>
 <script src="./scripts/cards.js"></script>
 <script src="./scripts/index.js"></script>
+<script src="./scripts/validate.js"></script>
 </body>
 </html>
