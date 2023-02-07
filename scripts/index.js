@@ -8,7 +8,6 @@ const profileJob = document.querySelector(".profile__occupation");
 
 //Кнопка и форма попап профиля
 const changeProfileBtn = document.querySelector(".profile__button-change");
-const profileForm = document.querySelector(".popup__form_type_profile");
 const nameInput = document.querySelector(".popup__input_type_name");
 const jobInput = document.querySelector(".popup__input_type_occupation");
 // Кнопка и инпуты попап новое место
@@ -78,15 +77,17 @@ function openImagePopup({ name, link }) {
   elementImageCaption.textContent = name;
 }
 
-function submitProfile(evt) {
-  evt.preventDefault();
+function submitForm(formElementClass) {
+  formElementClass.includes('popup__form_type_profile')?submitProfile():submitPlace()
+}
+
+function submitProfile() {
   closePopup(popupProfile);
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
 }
 
-function submitPlace(evt) {
-  evt.preventDefault();
+function submitPlace() {
   closePopup(popupPlace);
   const element = createElement({
     name: placeNameInput.value,
@@ -118,5 +119,5 @@ changeProfileBtn.addEventListener("click", openProfilePopup);
 addPlaceBtn.addEventListener("click", openPlacePopup);
 
 //Обработчик на все кнопки сохранить
-profileForm.addEventListener("submit", submitProfile);
-placeForm.addEventListener("submit", submitPlace);
+// profileForm.addEventListener("submit", submitProfile);
+// placeForm.addEventListener("submit", submitPlace);
