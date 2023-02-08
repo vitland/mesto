@@ -8,19 +8,20 @@ const profileJob = document.querySelector(".profile__occupation");
 
 //Кнопка и форма попап профиля
 const changeProfileBtn = document.querySelector(".profile__button-change");
-const nameInput = document.querySelector(".popup__input_type_name");
-const jobInput = document.querySelector(".popup__input_type_occupation");
+const nameInput = document.querySelector(".form__input_type_name");
+const jobInput = document.querySelector(".form__input_type_occupation");
 // Кнопка и инпуты попап новое место
 const addPlaceBtn = document.querySelector(".profile__button-add");
 const placeForm = document.querySelector(".popup__form_type_place");
-const placeNameInput = document.querySelector(".popup__input_type_place-name");
-const placeImageInput = document.querySelector(".popup__input_type_place-image");
+const placeNameInput = document.querySelector(".form__input_type_place-name");
+const placeImageInput = document.querySelector(".form__input_type_place-image");
 
 const elementImage = popupImage.querySelector(".popup__image");
 const elementImageCaption = popupImage.querySelector(".popup__image-caption");
 
 const popupCloseBtnList = document.querySelectorAll(".popup__close-icon");
 const elementsContainer = document.querySelector(".elements");
+const formList = document.querySelectorAll('.form')
 
 const elementTemplate = document
   .querySelector(".elements__template")
@@ -31,7 +32,7 @@ function populateElements(places) {
   elementsContainer.append(...elements);
 }
 
-function createElement({ name, link }) {
+function createElement({name, link}) {
   const element = elementTemplate.cloneNode(true);
   const image = element.querySelector(".element__image");
   image.src = link;
@@ -46,7 +47,7 @@ function createElement({ name, link }) {
   element.querySelector(".element__fav").addEventListener("click", likePlace);
   //Слушатель на открытие картинки
   element.querySelector(".element__image").addEventListener("click", () => {
-    openImagePopup({ name, link });
+    openImagePopup({name, link});
   });
 
   return element;
@@ -70,15 +71,15 @@ function openPlacePopup() {
   openPopup(popupPlace);
 }
 
-function openImagePopup({ name, link }) {
+function openImagePopup({name, link}) {
   openPopup(popupImage);
   elementImage.src = link;
   elementImage.alt = name;
   elementImageCaption.textContent = name;
 }
 
-function submitForm(formElementClass) {
-  formElementClass.includes('popup__form_type_profile')?submitProfile():submitPlace()
+function submitForm(formElement) {
+  formElement.classList.contains('form_type_profile') ? submitProfile() : submitPlace(formElement)
 }
 
 function submitProfile() {
@@ -87,14 +88,14 @@ function submitProfile() {
   profileJob.textContent = jobInput.value;
 }
 
-function submitPlace() {
+function submitPlace(formElement) {
   closePopup(popupPlace);
   const element = createElement({
     name: placeNameInput.value,
     link: placeImageInput.value,
   });
   elementsContainer.prepend(element);
-  placeForm.reset();
+  formElement.reset();
 }
 
 function removePlace(element) {
@@ -118,6 +119,5 @@ popupCloseBtnList.forEach((btn) => {
 changeProfileBtn.addEventListener("click", openProfilePopup);
 addPlaceBtn.addEventListener("click", openPlacePopup);
 
-//Обработчик на все кнопки сохранить
-// profileForm.addEventListener("submit", submitProfile);
-// placeForm.addEventListener("submit", submitPlace);
+//Обработчик всех форм
+formList.forEach(formElement => formElement.addEventListener("submit", () => submitForm(formElement)))
