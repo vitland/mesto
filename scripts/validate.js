@@ -18,34 +18,37 @@ function setEventListeners(options) {
     inputList.forEach((inputElement) =>
       inputElement.addEventListener("input", () => {
         //Проверка всех инпутов и установка состояния кнопки
-        checkInputValidity(formElement, inputElement, options.errorClass);
+        checkInputValidity(formElement, inputElement, options.errorClass, options.inputErrorBorder);
         toggleButtonState(inputList, buttonElement);
       })
     );
   });
 }
 
-function checkInputValidity(formElement, inputElement, errorClass) {
+function checkInputValidity(formElement, inputElement, errorClass,inputErrorBorder) {
   !inputElement.validity.valid
     ? showInputError(
       formElement,
       inputElement,
       inputElement.validationMessage,
-      errorClass
+      errorClass,
+      inputErrorBorder
     )
-    : hideInputError(formElement, inputElement, errorClass);
+    : hideInputError(formElement, inputElement, errorClass, inputErrorBorder);
 }
 
-function showInputError(formElement, inputElement, errorMessage, errorClass) {
+function showInputError(formElement, inputElement, errorMessage, errorClass, inputErrorBorder) {
   //Выбор нужного инпута с ошибкой
   const errorElement = formElement.querySelector(`.${inputElement.name}-input-error`);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(errorClass);
+  inputElement.classList.add(inputErrorBorder)
 }
 
-function hideInputError(formElement, inputElement, errorClass) {
+function hideInputError(formElement, inputElement, errorClass,inputErrorBorder) {
   const errorElement = formElement.querySelector(`.${inputElement.name}-input-error`);
   errorElement.classList.remove(errorClass);
+  inputElement.classList.remove(inputErrorBorder)
 }
 
 function hasInvalidInput(inputList) {

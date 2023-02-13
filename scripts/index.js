@@ -71,7 +71,10 @@ function openPopup(popup) {
   //Закрывает попап по Esc
   window.addEventListener('keydown', (evt) => closeByEsc(evt.key, popup))
   //Закрывает поппап по клику в оверлей
-  popup.addEventListener("click",() => closePopup(popup))
+  popup.addEventListener("mousedown",(evt) => {
+    if (evt.target.classList.contains('popup_opened')){
+      closePopup(popup)}
+    })
 }
 
 function openProfilePopup() {
@@ -136,9 +139,6 @@ popupCloseBtnList.forEach((btn) => {
   });
 });
 
-
-
-
 changeProfileBtn.addEventListener("click", openProfilePopup);
 addPlaceBtn.addEventListener("click", openPlacePopup);
 
@@ -154,4 +154,5 @@ enableValidation({
   inactiveButtonClass: "form__submit-button_disabled",
   inputErrorClass: "form__input-error",
   errorClass: "form__input-error_visible",
+  inputErrorBorder:"form__input_error"
 });
