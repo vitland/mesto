@@ -1,6 +1,6 @@
-.form__form{
+.form{
   display: flex;
   flex-direction: column;
-  gap: 30px;
   font-size: 14px;
+  margin: 0;
 }

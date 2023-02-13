@@ -1,4 +1,6 @@
 //Попапы
+const popup = document.querySelector(".popup");
+
 const popupPlace = document.querySelector(".popup_type_place");
 const popupProfile = document.querySelector(".popup_type_profile");
 const popupImage = document.querySelector(".popup_type_image");
@@ -12,7 +14,6 @@ const nameInput = document.querySelector(".form__input_type_name");
 const jobInput = document.querySelector(".form__input_type_occupation");
 // Кнопка и инпуты попап новое место
 const addPlaceBtn = document.querySelector(".profile__button-add");
-const placeForm = document.querySelector(".popup__form_type_place");
 const placeNameInput = document.querySelector(".form__input_type_place-name");
 const placeImageInput = document.querySelector(".form__input_type_place-image");
 
@@ -21,7 +22,7 @@ const elementImageCaption = popupImage.querySelector(".popup__image-caption");
 
 const popupCloseBtnList = document.querySelectorAll(".popup__close-icon");
 const elementsContainer = document.querySelector(".elements");
-const formList = document.querySelectorAll('.form')
+const formList = document.querySelectorAll(".form");
 
 const elementTemplate = document
   .querySelector(".elements__template")
@@ -53,18 +54,29 @@ function createElement({name, link}) {
   return element;
 }
 
+function closeByEsc(key, popup) {
+  if (key === "Escape") {
+    window.removeEventListener('keydown', closeByEsc)
+    closePopup(popup)
+  }
+}
+
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
 }
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+
+  //Закрывает попап по Esc
+  window.addEventListener('keydown', (evt) => closeByEsc(evt.key, popup))
+  //Закрывает поппап по клику в оверлей
+  popup.addEventListener("click",() => closePopup(popup))
 }
 
 function openProfilePopup() {
+  populateInputs();
   openPopup(popupProfile);
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
 }
 
 function openPlacePopup() {
@@ -78,8 +90,15 @@ function openImagePopup({name, link}) {
   elementImageCaption.textContent = name;
 }
 
+function populateInputs() {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
+}
+
 function submitForm(formElement) {
-  formElement.classList.contains('form_type_profile') ? submitProfile() : submitPlace(formElement)
+  formElement.classList.contains("form_type_profile")
+    ? submitProfile()
+    : submitPlace(formElement);
 }
 
 function submitProfile() {
@@ -107,6 +126,7 @@ function likePlace(evt) {
 }
 
 populateElements(elementsArr);
+populateInputs();
 
 //Обработчик на все кнопки закрытия
 popupCloseBtnList.forEach((btn) => {
@@ -116,8 +136,22 @@ popupCloseBtnList.forEach((btn) => {
   });
 });
 
+
+
+
 changeProfileBtn.addEventListener("click", openProfilePopup);
 addPlaceBtn.addEventListener("click", openPlacePopup);
 
 //Обработчик всех форм
-formList.forEach(formElement => formElement.addEventListener("submit", () => submitForm(formElement)))
+formList.forEach((formElement) =>
+  formElement.addEventListener("submit", () => submitForm(formElement))
+);
+
+enableValidation({
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__submit-button",
+  inactiveButtonClass: "form__submit-button_disabled",
+  inputErrorClass: "form__input-error",
+  errorClass: "form__input-error_visible",
+});
