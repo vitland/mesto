@@ -32,7 +32,7 @@ function populateElements(places) {
   elementsContainer.append(...elements);
 }
 
-function createElement({ name, link }) {
+function createElement({name, link}) {
   const element = elementTemplate.cloneNode(true);
   const image = element.querySelector(".element__image");
   image.src = link;
@@ -46,27 +46,27 @@ function createElement({ name, link }) {
   //Слушатель на лайк
   element.querySelector(".element__fav").addEventListener("click", toggleLike);
   //Слушатель на открытие картинки
-  image.addEventListener("click", () => openImagePopup({ name, link }));
+  image.addEventListener("click", () => openImagePopup({name, link}));
 
   return element;
 }
 
-function closePopup(evt) {
-  if (
-    evt.key === "Escape" ||
-    evt.type === "submit" ||
-    evt.target.classList.contains("popup_opened") ||
-    evt.target.classList.contains("popup__close-icon")
-  ) {
-    document.querySelector(".popup_opened").classList.remove("popup_opened");
-    window.removeEventListener("keydown", closePopup, false);
+function closePopupByEsc(evt) {
+  if (evt.key === "Escape") {
+    const popup = document.querySelector(".popup_opened");
+    closePopup(popup);
   }
+}
+
+function closePopup(popup) {
+  popup.classList.remove("popup_opened");
+  window.removeEventListener("keydown", closePopupByEsc, false);
 }
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
   //Слушатель на закрытие попапа по Esc
-  window.addEventListener("keydown", closePopup, false);
+  window.addEventListener("keydown", closePopupByEsc, false);
 }
 
 function openProfilePopup() {
@@ -79,7 +79,7 @@ function openPlacePopup() {
   openPopup(popupPlace);
 }
 
-function openImagePopup({ name, link }) {
+function openImagePopup({name, link}) {
   openPopup(popupImage);
   elementImage.src = link;
   elementImage.alt = name;
@@ -91,20 +91,14 @@ function fillProfileInputs() {
   jobInput.value = profileJob.textContent;
 }
 
-function submitForm(evt) {
-  evt.target.classList.contains("form_type_profile")
-    ? submitProfile(evt)
-    : submitPlace(evt);
-}
-
-function submitProfile(evt) {
-  closePopup(evt);
+function submitProfile() {
+  closePopup(popupProfile);
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
 }
 
 function submitPlace(evt) {
-  closePopup(evt);
+  closePopup(popupPlace);
   const element = createElement({
     name: placeNameInput.value,
     link: placeImageInput.value,
@@ -126,14 +120,23 @@ populateElements(elementsArr);
 fillProfileInputs();
 
 //Слушатель на попапы и кнопки закрытия
-popups.forEach((popup) => popup.addEventListener("mousedown", closePopup));
+popups.forEach((popup) =>
+  popup.addEventListener("mousedown", (evt) => {
+    if (
+      evt.target.classList.contains("popup_opened") ||
+      evt.target.classList.contains("popup__close-icon")
+    ) {
+      closePopup(popup);
+    }
+  })
+);
 
 changeProfileBtn.addEventListener("click", openProfilePopup);
 addPlaceBtn.addEventListener("click", openPlacePopup);
 
-//Обработчик всех форм
-profileForm.addEventListener("submit", submitForm);
-placeForm.addEventListener("submit", submitForm);
+//Обработчик форм
+profileForm.addEventListener("submit", submitProfile);
+placeForm.addEventListener("submit", submitPlace);
 
 enableValidation({
   formSelector: ".form",
