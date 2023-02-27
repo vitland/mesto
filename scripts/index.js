@@ -1,3 +1,5 @@
+import { Card } from "./Card.js";
+
 //Попапы
 const popups = document.querySelectorAll(".popup");
 const popupPlace = document.querySelector(".popup_type_place");
@@ -23,32 +25,9 @@ const elementsContainer = document.querySelector(".elements");
 const profileForm = document.forms["profile-form"];
 const placeForm = document.forms["place-form"];
 
-const elementTemplate = document
-  .querySelector(".elements__template")
-  .content.querySelector(".element");
-
 function populateElements(places) {
-  const elements = places.map((place) => createElement(place));
+  const elements = places.map((place) => new Card(place).generateCard());
   elementsContainer.append(...elements);
-}
-
-function createElement({name, link}) {
-  const element = elementTemplate.cloneNode(true);
-  const image = element.querySelector(".element__image");
-  image.src = link;
-  image.alt = name;
-  element.querySelector(".element__text").textContent = name;
-
-  //Слушатель на удаление
-  element.querySelector(".element__bin").addEventListener("click", () => {
-    removePlace(element);
-  });
-  //Слушатель на лайк
-  element.querySelector(".element__fav").addEventListener("click", toggleLike);
-  //Слушатель на открытие картинки
-  image.addEventListener("click", () => openImagePopup({name, link}));
-
-  return element;
 }
 
 function closePopupByEsc(evt) {
@@ -79,7 +58,7 @@ function openPlacePopup() {
   openPopup(popupPlace);
 }
 
-function openImagePopup({name, link}) {
+export function openImagePopup({ name, link }) {
   openPopup(popupImage);
   elementImage.src = link;
   elementImage.alt = name;
@@ -99,20 +78,14 @@ function submitProfile() {
 
 function submitPlace(evt) {
   closePopup(popupPlace);
-  const element = createElement({
+
+  const card = new Card({
     name: placeNameInput.value,
     link: placeImageInput.value,
-  });
-  elementsContainer.prepend(element);
+  }).generateCard();
+
+  elementsContainer.prepend(card);
   evt.target.reset();
-}
-
-function removePlace(element) {
-  element.remove();
-}
-
-function toggleLike(evt) {
-  evt.target.classList.toggle("element__fav_active");
 }
 
 populateElements(elementsArr);
