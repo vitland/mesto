@@ -1,4 +1,5 @@
 import { Card } from "./Card.js";
+import { FormValidation } from "./FormValidation.js";
 
 //Попапы
 const popups = document.querySelectorAll(".popup");
@@ -111,7 +112,8 @@ addPlaceBtn.addEventListener("click", openPlacePopup);
 profileForm.addEventListener("submit", submitProfile);
 placeForm.addEventListener("submit", submitPlace);
 
-enableValidation({
+(function enableValidation(){
+  document.querySelectorAll('.form').forEach(form => new FormValidation({
   formSelector: ".form",
   inputSelector: ".form__input",
   submitButtonSelector: ".form__submit-button",
@@ -119,4 +121,6 @@ enableValidation({
   inputErrorClass: "form__input-error",
   errorClass: "form__input-error_visible",
   inputErrorBorder: "form__input_error",
-});
+}, form).enableValidation())
+})()
+
