@@ -1,14 +1,15 @@
 import { openImagePopup } from "./index.js";
 
 export class Card {
-  constructor(data) {
+  constructor(data, templateSelector) {
     this._name = data.name;
     this._link = data.link;
+    this._templateSelector = templateSelector
   }
 
   _getTemplate() {
     return document
-      .querySelector(".elements__template")
+      .querySelector(this._templateSelector)
       .content.querySelector(".element")
       .cloneNode(true);
   }

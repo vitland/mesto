@@ -26,8 +26,9 @@ const elementsContainer = document.querySelector(".elements");
 const profileForm = document.forms["profile-form"];
 const placeForm = document.forms["place-form"];
 
+
 function populateElements(places) {
-  const elements = places.map((place) => new Card(place).generateCard());
+  const elements = places.map((place) => new Card(place, ".elements__template").generateCard());
   elementsContainer.append(...elements);
 }
 
