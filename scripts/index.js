@@ -28,7 +28,7 @@ const placeForm = document.forms["place-form"];
 
 
 function populateElements(places) {
-  const elements = places.map((place) => new Card(place, ".elements__template").generateCard());
+  const elements = places.map((place) => new Card(place, ".elements__template", openImagePopup).generateCard());
   elementsContainer.append(...elements);
 }
 
@@ -60,7 +60,7 @@ function openPlacePopup() {
   openPopup(popupPlace);
 }
 
-export function openImagePopup({ name, link }) {
+function openImagePopup({ name, link }) {
   openPopup(popupImage);
   elementImage.src = link;
   elementImage.alt = name;
@@ -83,8 +83,8 @@ function submitPlace(evt) {
 
   const card = new Card({
     name: placeNameInput.value,
-    link: placeImageInput.value,
-  }).generateCard();
+    link: placeImageInput.value
+  },".elements__template", openImagePopup).generateCard();
 
   elementsContainer.prepend(card);
   evt.target.reset();

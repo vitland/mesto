@@ -1,10 +1,9 @@
-import { openImagePopup } from "./index.js";
-
 export class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, openImagePopup) {
     this._name = data.name;
     this._link = data.link;
-    this._templateSelector = templateSelector
+    this._templateSelector = templateSelector;
+    this._openImagePopup = openImagePopup
   }
 
   _getTemplate() {
@@ -23,7 +22,7 @@ export class Card {
       .addEventListener("click", this._likeToggleHandler);
     element
       .querySelector(".element__image")
-      .addEventListener("click", this._clickOnImageHandler);
+      .addEventListener("click", (evt)=> this._openImagePopup({ name: evt.target.alt, link: evt.target.src }));
   }
 
   _removeHandler(element) {
@@ -33,11 +32,7 @@ export class Card {
   _likeToggleHandler(evt) {
     evt.target.classList.toggle("element__fav_active");
   }
-
-  _clickOnImageHandler(evt) {
-    openImagePopup({ name: evt.target.alt, link: evt.target.src });
-  }
-
+  
   generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners(this._element);
