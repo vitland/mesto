@@ -27,6 +27,7 @@ export class Card {
 
   _removeHandler(element) {
     element.remove();
+    element = null;
   }
 
   _likeToggleHandler(evt) {

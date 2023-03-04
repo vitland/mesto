@@ -2,30 +2,28 @@ export class FormValidation {
   constructor(options, formElement) {
     this._options = options;
     this._formElement = formElement;
-  }
-
-  _setEventListeners() {
-    const inputList = [...this._formElement.querySelectorAll(this._options.inputSelector)];
-    const buttonElement = this._formElement.querySelector(
+    this._inputList = [...this._formElement.querySelectorAll(this._options.inputSelector)];
+    this._buttonElement = this._formElement.querySelector(
       this._options.submitButtonSelector
     );
-    
+  }
+  _setEventListeners() {
     this._formElement.addEventListener("submit", (evt) => evt.preventDefault());
     
     //Сброс состояния кнопки, после сабмита
     this._formElement.addEventListener("reset", () => {
-      setTimeout(() => this._setButtonState(inputList,buttonElement), 0);
+      setTimeout(() => this._setButtonState(this._inputList,this._buttonElement), 0);
     });
     
     //Установка состояния кнопки до ввода данных
-    this._setButtonState(inputList,buttonElement);
+    this._setButtonState(this._inputList,this._buttonElement);
     
     //Проверка всех инпутов и установка состояния кнопки
     this._formElement
       .querySelectorAll(this._options.inputSelector).forEach(inputElement => inputElement
       .addEventListener("input", () => {
         this._toggleInputError(inputElement);
-        this._setButtonState(inputList,buttonElement);
+        this._setButtonState(this._inputList,this._buttonElement);
       }));
   }
 

@@ -1,5 +1,7 @@
 import { Card } from "./Card.js";
 import { FormValidation } from "./FormValidation.js";
+import config from "./config.js";
+import cards from "./cards.js";
 
 //Попапы
 const popups = document.querySelectorAll(".popup");
@@ -11,11 +13,11 @@ const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__occupation");
 
 //Кнопка и форма попап профиля
-const changeProfileBtn = document.querySelector(".profile__button-change");
+const popupProfileOpenButton = document.querySelector(".profile__button-change");
 const nameInput = document.querySelector(".form__input_type_name");
 const jobInput = document.querySelector(".form__input_type_occupation");
 // Кнопка и инпуты попап новое место
-const addPlaceBtn = document.querySelector(".profile__button-add");
+const popupPlaceOpenButton = document.querySelector(".profile__button-add");
 const placeNameInput = document.querySelector(".form__input_type_place-name");
 const placeImageInput = document.querySelector(".form__input_type_place-image");
 
@@ -26,6 +28,8 @@ const elementsContainer = document.querySelector(".elements");
 const profileForm = document.forms["profile-form"];
 const placeForm = document.forms["place-form"];
 
+const profileFormValidation = new FormValidation(config, profileForm)
+const placeFormValidation = new FormValidation(config, placeForm)
 
 function populateElements(places) {
   const elements = places.map((place) => new Card(place, ".elements__template", openImagePopup).generateCard());
@@ -90,7 +94,7 @@ function submitPlace(evt) {
   evt.target.reset();
 }
 
-populateElements(elementsArr);
+populateElements(cards);
 //Первоначальное заполнение инпутов профиля
 fillProfileInputs();
 
@@ -106,22 +110,13 @@ popups.forEach((popup) =>
   })
 );
 
-changeProfileBtn.addEventListener("click", openProfilePopup);
-addPlaceBtn.addEventListener("click", openPlacePopup);
+popupProfileOpenButton.addEventListener("click", openProfilePopup);
+popupPlaceOpenButton.addEventListener("click", openPlacePopup);
 
 //Обработчик форм
 profileForm.addEventListener("submit", submitProfile);
 placeForm.addEventListener("submit", submitPlace);
 
-(function enableValidation(){
-  document.querySelectorAll('.form').forEach(form => new FormValidation({
-  formSelector: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit-button",
-  activeButtonClass: "form__submit-button_active",
-  inputErrorClass: "form__input-error",
-  errorClass: "form__input-error_visible",
-  inputErrorBorder: "form__input_error",
-}, form).enableValidation())
-})()
+profileFormValidation.enableValidation()
+placeFormValidation.enableValidation()
 

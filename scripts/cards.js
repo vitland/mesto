@@ -1,4 +1,4 @@
-const elementsArr = [{
+const cards = [{
   name: "Домбай", link: "https://i.ibb.co/1m7JJCD/dombai.jpg",
 }, {
   name: "Эльбрус", link: "https://i.ibb.co/2NmW2cp/elbrus.jpg",
@@ -11,3 +11,5 @@ const elementsArr = [{
 }, {
   name: "Сочи, дендрарий", link: "https://i.ibb.co/TKL1Bnf/sochi2.jpg",
 },];
+
+export default cards
