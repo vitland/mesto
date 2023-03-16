@@ -1,5 +1,6 @@
 import { Card } from './Card.js';
 import { Section } from './Seciton.js';
+import { UserInfo } from './UserInfo.js';
 import { Popup } from './Popup.js';
 import { PopupWithImage } from './PopupWithImage.js';
 import { PopupWithForm } from './PopupWithForm.js';
@@ -13,8 +14,10 @@ const popupPlace = document.querySelector('.popup_type_place');
 const popupProfile = document.querySelector('.popup_type_profile');
 const popupImage = document.querySelector('.popup_type_image');
 
+const userName = document.querySelector('.profile__name');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__occupation');
+const userJob = document.querySelector('.profile__occupation');
 
 //Кнопка и форма попап профиля
 const popupWithUserInfoOpenButton = document.querySelector(
@@ -23,7 +26,9 @@ const popupWithUserInfoOpenButton = document.querySelector(
 const nameInput = document.querySelector('.form__input_type_name');
 const jobInput = document.querySelector('.form__input_type_occupation');
 // Кнопка и инпуты попап новое место
-const popupWithPlaceInfoOpenButton = document.querySelector('.profile__button-add');
+const popupWithPlaceInfoOpenButton = document.querySelector(
+  '.profile__button-add'
+);
 const placeNameInput = document.querySelector('.form__input_type_place-name');
 const placeImageInput = document.querySelector('.form__input_type_place-image');
 
@@ -38,6 +43,12 @@ const placeForm = document.forms['place-form'];
 
 const profileFormValidation = new FormValidation(config, profileForm);
 const placeFormValidation = new FormValidation(config, placeForm);
+
+const userInfo = new UserInfo({
+  nameSelector: '.profile__name',
+  jobSelector: '.profile__occupation',
+});
+console.log(userInfo);
 
 const placeList = new Section(
   {
@@ -57,16 +68,15 @@ const popupWithImage = new PopupWithImage('.popup_type_image');
 
 const popupWithUserInfo = new PopupWithForm(
   '.popup_type_profile',
-  ({name, job}) => {
-    profileName.textContent = name;
-    profileJob.textContent = job;
+  ({ name, job }) => {
+    userInfo.setUserInfo({ name, job });
     popupWithUserInfo.close();
   }
 );
 
 const popupWithPlaceInfo = new PopupWithForm(
   '.popup_type_place',
-  ({placeName, placeImage}) => {
+  ({ placeName, placeImage }) => {
     const card = new Card(
       {
         name: placeName,
@@ -75,27 +85,26 @@ const popupWithPlaceInfo = new PopupWithForm(
       '.elements__template',
       popupWithImage.open
     ).generateCard();
-  
+
     placeList.addItem(card);
 
     popupWithPlaceInfo.close();
   }
 );
 
-function fillProfileInputs() {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
-}
-
 placeList.renderItems();
 
-//Первоначальное заполнение инпутов профиля
-fillProfileInputs();
-
-popupWithUserInfoOpenButton.addEventListener('click', () => popupWithUserInfo.open());
+popupWithUserInfoOpenButton.addEventListener('click', () => {
+  const { name, job } = userInfo.getUserInfo();
+  nameInput.value = name;
+  jobInput.value = job;
+  popupWithUserInfo.open();
+});
 popupWithUserInfo.setEventListeners();
-popupWithPlaceInfoOpenButton.addEventListener('click', () => popupWithPlaceInfo.open());
-popupWithPlaceInfo.setEventListeners()
+popupWithPlaceInfoOpenButton.addEventListener('click', () =>
+  popupWithPlaceInfo.open()
+);
+popupWithPlaceInfo.setEventListeners();
 popupWithImage.setEventListeners();
 
 //Обработчик форм

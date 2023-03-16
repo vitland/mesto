@@ -11,7 +11,6 @@ export class Popup{
   }
   
   open(){
-    console.log(this)
     window.addEventListener("keydown", this._handleEscClose)
     this._popup.classList.add("popup_opened")
   }
