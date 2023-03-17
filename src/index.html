@@ -4,24 +4,23 @@
   <meta charset="UTF-8"/>
   <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <link href="./pages/index.css" rel="stylesheet"/>
   <title>Место</title>
 </head>
 <body>
 <div class="content">
   <header class="header content__header">
     <img
-      alt="логотип место"
-      class="logo header__logo"
-      src="./images/mesto-logo.svg"
-    />
+    alt="логотип место"
+    class="logo header__logo"
+    src="<%=require('./images/mesto-logo.svg')%>"
+  />
   </header>
   <main class="main">
     <section class="profile content__profile">
       <img
         alt="фото Жак-Ив Кусто"
         class="profile__avatar"
-        src="./images/avatar.jpg"
+        src="<%=require('./images/avatar.jpg')%>"
       />
       <div class="profile__info">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -63,7 +62,7 @@
           />
           <span class="form__input-error job-input-error"></span>
         </fieldset>
-        <button class="form__submit-button opacity" type="submit" >
+        <button class="form__submit-button opacity form__submit-button_active" type="submit" >
           Сохранить
         </button>
       </form>
@@ -76,23 +75,23 @@
       <form class="form form_type_place" name="place-form" novalidate>
         <fieldset class="form__set">
           <input
-            class="form__input form__input_type_place-name"
-            name="place-name"
+            class="form__input form__input_type_placeName"
+            name="placeName"
             placeholder="Название места"
             type="text"
             minlength="2"
             maxlength="30"
             required
           />
-          <span class="form__input-error place-name-input-error"></span>
+          <span class="form__input-error placeName-input-error"></span>
           <input
-            class="form__input form__input_type_place-image"
-            name="place-image"
+            class="form__input form__input_type_placeImage"
+            name="placeImage"
             placeholder="Ссылка на изображение"
             type="url"
             required
           />
-          <span class="form__input-error place-image-input-error"></span>
+          <span class="form__input-error placeImage-input-error"></span>
         </fieldset>
         <button class="form__submit-button opacity" type="submit">
           Добавить
@@ -118,6 +117,5 @@
     </article>
   </template>
 </div>
-<script type="module" defer src="./scripts/index.js"></script>
 </body>
 </html>
