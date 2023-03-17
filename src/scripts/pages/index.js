@@ -16,14 +16,17 @@ const userInfo = new UserInfo({
   jobSelector: userJob,
 });
 
+function createCard(place){
+   const card = new Card(place, elementsTemplate, ({ name, link }) =>
+  popupWithImage.open({ name, link })).generateCard()
+   return card
+}
+
 const placeList = new Section(
   {
     items: cards,
     renderer: (place) => {
-      const card = new Card(place, elementsTemplate, ({ name, link }) =>
-        popupWithImage.open({ name, link })
-      );
-      const cardElement = card.generateCard();
+      const cardElement = createCard(place)
       placeList.addItem(cardElement);
     },
   },
@@ -38,20 +41,15 @@ const popupWithUserInfo = new PopupWithForm(
     popupWithUserInfo.close();
   }
 );
+
 const popupWithPlaceInfo = new PopupWithForm(
   popupPlaceSelector,
   ({ placeName, placeImage }) => {
-    const card = new Card(
-      {
-        name: placeName,
-        link: placeImage,
-      },
-      elementsTemplate,
-      popupWithImage.open
-    ).generateCard();
-
+    const card = createCard({
+      name: placeName,
+      link: placeImage,
+    })
     placeList.addItem(card);
-
     popupWithPlaceInfo.close();
   }
 );
