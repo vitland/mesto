@@ -6,6 +6,7 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { FormValidation } from '../components/FormValidation.js';
 import { elementsContainer, elementsTemplate, jobInput, nameInput, placeForm, popupImageSelector, popupPlaceSelector, popupProfileSelector, popupWithPlaceInfoOpenButton, popupWithUserInfoOpenButton, profileForm, userJob, userName, cards } from '../utils/constants.js';
 import config from '../utils/validationConfig.js';
+import '../../pages/index.css'
 
 const profileFormValidation = new FormValidation(config, profileForm);
 const placeFormValidation = new FormValidation(config, placeForm);
