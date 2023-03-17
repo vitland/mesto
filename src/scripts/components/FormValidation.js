@@ -15,13 +15,10 @@ export class FormValidation {
     //Сброс состояния кнопки, после сабмита
     this._formElement.addEventListener('reset', () => {
       setTimeout(
-        () => this._setButtonState(this._inputList, this._buttonElement),
+        () => this.setButtonState(),
         0
       );
     });
-
-    //Установка состояния кнопки до ввода данных
-    this._setButtonState(this._inputList, this._buttonElement);
 
     //Проверка всех инпутов и установка состояния кнопки
     this._formElement
@@ -29,18 +26,18 @@ export class FormValidation {
       .forEach((inputElement) =>
         inputElement.addEventListener('input', () => {
           this._toggleInputError(inputElement);
-          this._setButtonState(this._inputList, this._buttonElement);
+          this.setButtonState();
         })
       );
   }
 
-  _setButtonState(inputList, buttonElement) {
-    if (this._getInputStatus(inputList)) {
-      buttonElement.setAttribute('disabled', 'disabled');
-      buttonElement.classList.remove(this._options.activeButtonClass);
+  setButtonState() {
+    if (this._getInputStatus(this._inputList)) {
+      this._buttonElement.setAttribute('disabled', 'disabled');
+      this._buttonElement.classList.remove(this._options.activeButtonClass);
     } else {
-      buttonElement.removeAttribute('disabled', 'disabled');
-      buttonElement.classList.add(this._options.activeButtonClass);
+      this._buttonElement.removeAttribute('disabled', 'disabled');
+      this._buttonElement.classList.add(this._options.activeButtonClass);
     }
   }
 

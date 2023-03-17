@@ -1,15 +1,15 @@
+import { formSelector, inputListSelector } from '../utils/constants.js';
 import { Popup } from './Popup.js';
 
 export class PopupWithForm extends Popup {
   constructor(popupSelector, handleSubmitForm) {
     super(popupSelector);
     this._handleSubmitForm = handleSubmitForm;
-    this._form = this._popup.querySelector('.form');
+    this._form = this._popup.querySelector(formSelector);
   }
 
   _getInputValues() {
-    this._inputList = Array.from(this._form.querySelectorAll('.form__input'));
-
+    this._inputList = Array.from(this._form.querySelectorAll(inputListSelector));
     return this._inputList.reduce((acc, cur) => {
       acc[cur.name] = cur.value;
       return acc;
@@ -29,4 +29,8 @@ export class PopupWithForm extends Popup {
     this._form.reset();
   }
 
+  open(){
+    super.open()
+    this._getInputValues()
+  }
 }
