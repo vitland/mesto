@@ -2,20 +2,25 @@
 export const popupPlaceSelector = '.popup_type_place';
 export const popupProfileSelector = '.popup_type_profile';
 export const popupImageSelector = '.popup_type_image';
+export const popupNewAvatarSelector = '.popup_type_avatar';
+export const popupConfirmSelector = '.popup_type_confirm';
 
 export const userName = '.profile__name';
 export const userJob = '.profile__occupation';
+export const userAvatar = '.profile__avatar'
 
 export const elementsContainer = '.elements';
 export const elementsTemplate = '.elements__template';
 export const elementSelector = '.element';
 export const elementImageSelector = '.element__image';
 export const elementCaptionSelector = '.element__text'
+export const elementLikeCounter = '.element__fav-counter'
 export const removeButtonSelector = '.element__bin';
 export const favButtonSelector = '.element__fav';
 
-
-//Кнопка и форма попап профиля
+// Кнопка изменения аватара
+export const edtiAvatarButton = document.querySelector('.profile__avatar-container')
+// Кнопка и форма попап профиля
 export const popupWithUserInfoOpenButton = document.querySelector(
   '.profile__button-change'
 );
@@ -33,17 +38,4 @@ export const elementImageCaption = document.querySelector(
 export const formSelector = '.form';
 export const profileForm = document.forms['profile-form'];
 export const placeForm = document.forms['place-form'];
-
-export const cards = [{
-  name: "Домбай", link: "https://i.ibb.co/1m7JJCD/dombai.jpg",
-}, {
-  name: "Эльбрус", link: "https://i.ibb.co/2NmW2cp/elbrus.jpg",
-}, {
-  name: "Красноярск", link: "https://i.ibb.co/wWLHmvH/krasnoyarsk.jpg",
-}, {
-  name: "Сочи", link: "https://i.ibb.co/brGLRJ6/sochi.jpg",
-}, {
-  name: "Москва", link: "https://i.ibb.co/NxXrbCV/moscow.jpg",
-}, {
-  name: "Сочи, дендрарий", link: "https://i.ibb.co/TKL1Bnf/sochi2.jpg",
-},];
+export const avatarForm = document.forms['avatar-form']

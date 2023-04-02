@@ -1,6 +1,7 @@
 @import url(../vendor/normalize.css);
 @import url(../vendor/fonts/fonts.css);
 @import url(../blocks/opacity/opacity.css);
+@import url(../blocks/disabled/disabled.css);
 /* main */
 @import url(../blocks/main/main.css);
 
@@ -18,6 +19,7 @@
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__button-add/profile__button-add.css);
 @import url(../blocks/profile/__button-change/profile__button-change.css);
+@import url(../blocks/profile/__avatar-container/profile__avatar-container.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__name/profile__name.css);
@@ -27,6 +29,8 @@
 /* element */
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/__description/element__description.css);
+@import url(../blocks/element/__fav-container/element__fav-container.css);
+@import url(../blocks/element/__fav-counter/element__fav-counter.css);
 @import url(../blocks/element/__fav/element__fav.css);
 @import url(../blocks/element/__fav/_active/element__fav_active.css);
 @import url(../blocks/element/__image/element__image.css);
