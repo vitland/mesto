@@ -4,6 +4,7 @@ import { Section } from '../components/Seciton.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { FormValidation } from '../components/FormValidation.js';
 import {
   elementsContainer,
@@ -25,9 +26,8 @@ import {
   popupConfirmSelector,
   edtiAvatarButton,
 } from '../utils/constants.js';
-import config from '../utils/validationConfig.js';
+import {config} from '../utils/constants.js'
 import '../../pages/index.css';
-import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 
 const profileFormValidation = new FormValidation(config, profileForm);
 const placeFormValidation = new FormValidation(config, placeForm);
@@ -44,11 +44,8 @@ const api = new Api(
   'bfea2fb3-1d49-4e0a-bbc4-333aa2efb088'
 );
 
+// Заполнение профиля
 api.getUser().then((user) => userInfo.setUserInfo(user));
-
-function renderLoading(isLoading) {
-  console.log(this);
-}
 
 function createCard(place) {
   const card = new Card(
@@ -56,6 +53,7 @@ function createCard(place) {
     api.getUser(),
     elementsTemplate,
     ({ name, link }) => popupWithImage.open({ name, link }),
+    // Передача данных о карточке и элементе карточки в попап
     (cardId, element) => {
       popupWithConfirm.open(cardId, element);
     },
@@ -107,7 +105,9 @@ const popupWithUserInfo = new PopupWithForm(
 const popupWithPlaceInfo = new PopupWithForm(
   popupPlaceSelector,
   ({ placeName, placeImage }) => {
+    // Сохранение....
     popupWithPlaceInfo.renderLoading(true);
+
     api.addCard({
         name: placeName,
         link: placeImage,

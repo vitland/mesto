@@ -1,4 +1,4 @@
-import { formSelector, inputListSelector } from '../utils/constants.js';
+import { formSelector, inputListSelector, config } from '../utils/constants.js';
 import { Popup } from './Popup.js';
 
 export class PopupWithForm extends Popup {
@@ -7,7 +7,7 @@ export class PopupWithForm extends Popup {
     this._handleSubmitForm = handleSubmitForm;
     this._form = this._popup.querySelector(formSelector);
     this._inputList = Array.from(this._form.querySelectorAll(inputListSelector));
-    this._submitButton = this._form.querySelector('.form__submit-button')
+    this._submitButton = this._form.querySelector(config.submitButtonSelector)
   }
 
   _getInputValues() {
@@ -19,7 +19,7 @@ export class PopupWithForm extends Popup {
 
   renderLoading(isLoading){
     if(isLoading){
-      console.log(this._submitButton.textContent)
+      console.log(this._submitButton)
       this._submitButton.textContent = 'Сохранение...'
     }else {
     this._submitButton.textContent = 'Сохранить'

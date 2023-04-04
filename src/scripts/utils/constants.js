@@ -18,6 +18,16 @@ export const elementLikeCounter = '.element__fav-counter'
 export const removeButtonSelector = '.element__bin';
 export const favButtonSelector = '.element__fav';
 
+export const config = {
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".popup__submit-button",
+  activeButtonClass: "popup__submit-button_active",
+  inputErrorClass: "form__input-error",
+  errorClass: "form__input-error_visible",
+  inputErrorBorder: "form__input_error",
+}
+
 // Кнопка изменения аватара
 export const edtiAvatarButton = document.querySelector('.profile__avatar-container')
 // Кнопка и форма попап профиля
