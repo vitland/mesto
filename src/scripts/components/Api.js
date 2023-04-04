@@ -9,11 +9,14 @@ export class Api {
       headers: {
         authorization: this._token,
       },
-    }).then((res) => {
+    })
+    .then((res) => {
       if (res.ok) {
         return res.json();
       }
-    });
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch((err) => console.log(err));
   }
 
   editUser({ name, about }) {

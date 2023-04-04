@@ -6,20 +6,18 @@ export class UserInfo {
     this.user = {};
   }
 
-  setUserInfo(data) {
-    data.then((user) => {
+  setUserInfo(user) {
       this._name.textContent = user.name;
       this._about.textContent = user.about;
       this._avatar.src = user.avatar;
       this._id = user._id;
-    });
   }
 
-  getUserInfo() {
-    this.user.name = this._name.textContent;
-    this.user.about = this._about.textContent;
-    this.user.avatar = this._avatar.src;
-    this.user.id = this._id;
+  getUserInfo(user) {
+    this.user.name = user.name;
+    this.user.about = user.about;
+    this.user.avatar = user.avatar;
+    this.user.id = user._id;
     return this.user;
   }
 

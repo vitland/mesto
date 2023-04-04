@@ -31,7 +31,7 @@ import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 
 const profileFormValidation = new FormValidation(config, profileForm);
 const placeFormValidation = new FormValidation(config, placeForm);
-const avatarFormValidation = new FormValidation(config, avatarForm)
+const avatarFormValidation = new FormValidation(config, avatarForm);
 
 const userInfo = new UserInfo({
   nameSelector: userName,
@@ -39,12 +39,16 @@ const userInfo = new UserInfo({
   avatarSelector: userAvatar,
 });
 
-const api = new Api (
+const api = new Api(
   'https://mesto.nomoreparties.co/v1/',
   'bfea2fb3-1d49-4e0a-bbc4-333aa2efb088'
 );
 
-userInfo.setUserInfo(api.getUser());
+api.getUser().then((user) => userInfo.setUserInfo(user));
+
+function renderLoading(isLoading) {
+  console.log(this);
+}
 
 function createCard(place) {
   const card = new Card(
@@ -55,7 +59,7 @@ function createCard(place) {
     (cardId, element) => {
       popupWithConfirm.open(cardId, element);
     },
-    (evt, cardId, likeCounter)=>{
+    (evt, cardId, likeCounter) => {
       if (!evt.target.classList.contains('element__fav_active')) {
         api.addLike(cardId).then((updatedCard) => {
           likeCounter.textContent = updatedCard.likes.length;
@@ -65,7 +69,7 @@ function createCard(place) {
           likeCounter.textContent = updatedCard.likes.length;
         });
       }
-  
+
       evt.target.classList.toggle('element__fav_active');
     }
   ).generateCard();
@@ -87,33 +91,50 @@ const popupWithImage = new PopupWithImage(popupImageSelector);
 const popupWithUserInfo = new PopupWithForm(
   popupProfileSelector,
   ({ name, about }) => {
-    api.editUser({ name, about }).then((user) => userInfo.editUserInfo(user));
-    popupWithUserInfo.close();
+    popupWithUserInfo.renderLoading(true);
+    api
+      .editUser({ name, about })
+      .then((user) => {
+        userInfo.editUserInfo(user);
+      })
+      .finally(() => {
+        popupWithUserInfo.close();
+        popupWithUserInfo.renderLoading(false);
+      });
   }
 );
 
 const popupWithPlaceInfo = new PopupWithForm(
   popupPlaceSelector,
   ({ placeName, placeImage }) => {
+    popupWithPlaceInfo.renderLoading(true);
     api.addCard({
         name: placeName,
         link: placeImage,
       })
       .then((place) => {
         placeList.addItem(createCard(place));
+      })
+      .finally(() => {
+        popupWithPlaceInfo.renderLoading(false);
         popupWithPlaceInfo.close();
       });
   }
 );
 
-const popupWithNewAvatar = new PopupWithForm(popupNewAvatarSelector,
-  (avatarObj) =>{
-    api.editUserAvatar(avatarObj)
-    .then(() => {
-      userInfo.editUserAvatar(avatarObj)
-      popupWithNewAvatar.close()
+const popupWithNewAvatar = new PopupWithForm(
+  popupNewAvatarSelector,
+  (avatarObj) => {
+    api.editUserAvatar(avatarObj).then(() => {
+      popupWithNewAvatar.renderLoading(true)
+      userInfo.editUserAvatar(avatarObj);
     })
-  })
+    .finally(()=> {
+      popupWithNewAvatar.renderLoading(false)
+      popupWithNewAvatar.close()
+    });
+  }
+);
 
 const popupWithConfirm = new PopupWithConfirmation(
   popupConfirmSelector,
@@ -129,26 +150,27 @@ const popupWithConfirm = new PopupWithConfirmation(
 placeList.renderItems();
 
 popupWithUserInfoOpenButton.addEventListener('mousedown', () => {
-  const { name, about } = userInfo.getUserInfo(api.getUser());
-  nameInput.value = name;
-  jobInput.value = about;
-  profileFormValidation.setButtonState();
-  popupWithUserInfo.open();
+  api.getUser().then((user) => {
+    const { name, about } = userInfo.getUserInfo(user);
+    nameInput.value = name;
+    jobInput.value = about;
+    profileFormValidation.setButtonState();
+    popupWithUserInfo.open();
+  });
 });
 
 popupWithPlaceInfoOpenButton.addEventListener('click', () =>
   popupWithPlaceInfo.open()
 );
 
-edtiAvatarButton.addEventListener('mousedown', ()=> popupWithNewAvatar.open())
+edtiAvatarButton.addEventListener('mousedown', () => popupWithNewAvatar.open());
 
 popupWithUserInfo.setEventListeners();
 popupWithPlaceInfo.setEventListeners();
 popupWithImage.setEventListeners();
 popupWithNewAvatar.setEventListeners();
-// popupWithConfirm.setEventListeners();
 
 //Валидация форм
 profileFormValidation.enableValidation();
 placeFormValidation.enableValidation();
-avatarFormValidation.enableValidation()
+avatarFormValidation.enableValidation();

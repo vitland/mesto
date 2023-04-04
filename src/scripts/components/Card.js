@@ -31,6 +31,7 @@ export class Card {
     this._likeCounter = this.element.querySelector(elementLikeCounter);
     this._imageCaption = this.element.querySelector(elementCaptionSelector);
     this._removeIcon = this.element.querySelector('.element__bin');
+    this._favButton = this.element.querySelector(favButtonSelector);
   }
 
   _getTemplate() {
@@ -48,7 +49,9 @@ export class Card {
       );
     this.element
       .querySelector(favButtonSelector)
-      .addEventListener('click', (evt)=> this._likeHandler(evt, this._cardId, this._likeCounter));
+      .addEventListener('click', (evt) =>
+        this._likeHandler(evt, this._cardId, this._likeCounter)
+      );
     this.element
       .querySelector(elementImageSelector)
       .addEventListener('click', (evt) => {
@@ -56,11 +59,13 @@ export class Card {
       });
   }
 
-
   generateCard() {
     this._getCurrentUser.then((user) => {
       if (user._id === this._ownerId) {
         this._removeIcon.classList.remove('disabled');
+      }
+      if (this._likes.find((el) => el._id === user._id)) {
+        this._favButton.classList.toggle('element__fav_active');
       }
     });
     this._setEventListeners();
