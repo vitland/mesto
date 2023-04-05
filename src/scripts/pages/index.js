@@ -13,7 +13,7 @@ import {
   nameInput,
   placeForm,
   avatarForm,
-  popupImageSelector,
+  popupWithImageSelector,
   popupPlaceSelector,
   popupProfileSelector,
   popupNewAvatarSelector,
@@ -26,7 +26,7 @@ import {
   popupConfirmSelector,
   edtiAvatarButton,
 } from '../utils/constants.js';
-import {config} from '../utils/constants.js'
+import { config } from '../utils/constants.js';
 import '../../pages/index.css';
 
 const profileFormValidation = new FormValidation(config, profileForm);
@@ -40,17 +40,20 @@ const userInfo = new UserInfo({
 });
 
 const api = new Api(
-  'https://mesto.nomoreparties.co/v1/',
+  'https://mesto.nomoreparties.co/v1/cohort-63',
   'bfea2fb3-1d49-4e0a-bbc4-333aa2efb088'
 );
 
+const user = api.getUser().catch((err) => console.log(err));
+const cards = api.getCards().catch((err) => console.log(err));
+
 // Заполнение профиля
-api.getUser().then((user) => userInfo.setUserInfo(user));
+user.then((user) => userInfo.setUserInfo(user))
 
 function createCard(place) {
   const card = new Card(
     place,
-    api.getUser(),
+    user,
     elementsTemplate,
     ({ name, link }) => popupWithImage.open({ name, link }),
     // Передача данных о карточке и элементе карточки в попап
@@ -59,13 +62,13 @@ function createCard(place) {
     },
     (evt, cardId, likeCounter) => {
       if (!evt.target.classList.contains('element__fav_active')) {
-        api.addLike(cardId).then((updatedCard) => {
-          likeCounter.textContent = updatedCard.likes.length;
-        });
+        api.addLike(cardId)
+        .then((updatedCard) => {likeCounter.textContent = updatedCard.likes.length})
+        .catch((err) => console.log(err));
       } else {
-        api.removeLike(cardId).then((updatedCard) => {
-          likeCounter.textContent = updatedCard.likes.length;
-        });
+        api.removeLike(cardId)
+        .then((updatedCard) => {likeCounter.textContent = updatedCard.likes.length})
+        .catch((err) => console.log(err));
       }
 
       evt.target.classList.toggle('element__fav_active');
@@ -76,15 +79,15 @@ function createCard(place) {
 
 const placeList = new Section(
   {
-    items: api.getCards(),
-    renderer: (place) => {
-      placeList.addItem(createCard(place));
+    items: cards,
+    renderer: (container, place) => {
+      container.append(createCard(place))
     },
   },
   elementsContainer
 );
 
-const popupWithImage = new PopupWithImage(popupImageSelector);
+const popupWithImage = new PopupWithImage(popupWithImageSelector);
 
 const popupWithUserInfo = new PopupWithForm(
   popupProfileSelector,
@@ -93,10 +96,11 @@ const popupWithUserInfo = new PopupWithForm(
     api
       .editUser({ name, about })
       .then((user) => {
-        userInfo.editUserInfo(user);
-      })
-      .finally(() => {
+        userInfo.setUserInfo(user);
         popupWithUserInfo.close();
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
         popupWithUserInfo.renderLoading(false);
       });
   }
@@ -107,17 +111,18 @@ const popupWithPlaceInfo = new PopupWithForm(
   ({ placeName, placeImage }) => {
     // Сохранение....
     popupWithPlaceInfo.renderLoading(true);
-
-    api.addCard({
+    api
+      .addCard({
         name: placeName,
         link: placeImage,
       })
       .then((place) => {
         placeList.addItem(createCard(place));
+        popupWithPlaceInfo.close();
       })
+      .catch((err) => console.log(err))
       .finally(() => {
         popupWithPlaceInfo.renderLoading(false);
-        popupWithPlaceInfo.close();
       });
   }
 );
@@ -125,38 +130,45 @@ const popupWithPlaceInfo = new PopupWithForm(
 const popupWithNewAvatar = new PopupWithForm(
   popupNewAvatarSelector,
   (avatarObj) => {
-    api.editUserAvatar(avatarObj).then(() => {
-      popupWithNewAvatar.renderLoading(true)
-      userInfo.editUserAvatar(avatarObj);
-    })
-    .finally(()=> {
-      popupWithNewAvatar.renderLoading(false)
-      popupWithNewAvatar.close()
-    });
+    api
+      .editUserAvatar(avatarObj)
+      .then(() => {
+        popupWithNewAvatar.renderLoading(true);
+        userInfo.setUserInfo(avatarObj);
+        popupWithNewAvatar.close();
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        popupWithNewAvatar.renderLoading(false);
+      });
   }
 );
 
 const popupWithConfirm = new PopupWithConfirmation(
   popupConfirmSelector,
   (cardId, element) => {
-    api.removeCard(cardId).then(() => {
+    api.removeCard(cardId)
+    .then(() => {
       element.remove();
       element = null;
       popupWithConfirm.close();
-    });
+    })
+    .catch((err) => console.log(err));
   }
 );
 
-placeList.renderItems();
+// Рендер карточек, после получения всей информации с сервера
+Promise.all([user, cards]).then(()=> placeList.renderItems())
 
 popupWithUserInfoOpenButton.addEventListener('mousedown', () => {
-  api.getUser().then((user) => {
+  user.then((user) => {
     const { name, about } = userInfo.getUserInfo(user);
     nameInput.value = name;
     jobInput.value = about;
     profileFormValidation.setButtonState();
     popupWithUserInfo.open();
-  });
+  })
+  .catch((err) => console.log(err));
 });
 
 popupWithPlaceInfoOpenButton.addEventListener('click', () =>

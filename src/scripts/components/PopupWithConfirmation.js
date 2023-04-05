@@ -16,10 +16,6 @@ export class PopupWithConfirmation extends Popup {
     });
   }
 
-  close() {
-    super.close();
-  }
-
   open(cardId, element) {
     super.open();
     this._cardId = cardId;

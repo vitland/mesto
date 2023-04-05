@@ -1,7 +1,7 @@
 
 export const popupPlaceSelector = '.popup_type_place';
 export const popupProfileSelector = '.popup_type_profile';
-export const popupImageSelector = '.popup_type_image';
+export const popupWithImageSelector = '.popup_type_image';
 export const popupNewAvatarSelector = '.popup_type_avatar';
 export const popupConfirmSelector = '.popup_type_confirm';
 
@@ -41,10 +41,8 @@ export const jobInput = document.querySelector('.form__input_type_occupation');
 export const popupWithPlaceInfoOpenButton = document.querySelector(
   '.profile__button-add'
 );
-export const elementImage = document.querySelector('.popup__image');
-export const elementImageCaption = document.querySelector(
-  '.popup__image-caption'
-);
+export const popupImageSelector = '.popup__image';
+export const popupImageCaptionSelector ='.popup__image-caption';
 export const formSelector = '.form';
 export const profileForm = document.forms['profile-form'];
 export const placeForm = document.forms['place-form'];

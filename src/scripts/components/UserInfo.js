@@ -7,10 +7,18 @@ export class UserInfo {
   }
 
   setUserInfo(user) {
+    if (user.name) {
       this._name.textContent = user.name;
+    }
+    if (user.about) {
       this._about.textContent = user.about;
-      this._avatar.src = user.avatar;
+    }
+    if (user._id) {
       this._id = user._id;
+    }
+    if (user.avatar) {
+      this._avatar.src = user.avatar;
+    }
   }
 
   getUserInfo(user) {
@@ -19,14 +27,5 @@ export class UserInfo {
     this.user.avatar = user.avatar;
     this.user.id = user._id;
     return this.user;
-  }
-
-  editUserInfo({ name, about }) {
-    this._name.textContent = name;
-    this._about.textContent = about;
-  }
-
-  editUserAvatar({avatar}) {
-    this._avatar.src = avatar;
   }
 }
