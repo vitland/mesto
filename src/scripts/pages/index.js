@@ -44,12 +44,14 @@ const api = new Api(
   'bfea2fb3-1d49-4e0a-bbc4-333aa2efb088'
 );
 
-Promise.all([api.getUser(), api.getCards()]).then(([user, cards]) => {
-  // Заполнение профиля
-  userInfo.setUserInfo(user);
-  //Рендер карточек
-  placeList.renderItems(cards);
-});
+Promise.all([api.getUser(), api.getCards()])
+  .then(([user, cards]) => {
+    // Заполнение профиля
+    userInfo.setUserInfo(user);
+    //Рендер карточек
+    placeList.renderItems(cards);
+  })
+  .catch((err) => console.error(err));
 
 const placeList = new Section(
   {
