@@ -44,16 +44,26 @@ const api = new Api(
   'bfea2fb3-1d49-4e0a-bbc4-333aa2efb088'
 );
 
-const user = api.getUser().catch((err) => console.log(err));
-const cards = api.getCards().catch((err) => console.log(err));
+Promise.all([api.getUser(), api.getCards()]).then(([user, cards]) => {
+  // Заполнение профиля
+  userInfo.setUserInfo(user);
+  //Рендер карточек
+  placeList.renderItems(cards);
+});
 
-// Заполнение профиля
-user.then((user) => userInfo.setUserInfo(user))
+const placeList = new Section(
+  {
+    renderer: (container, place) => {
+      container.append(createCard(place));
+    },
+  },
+  elementsContainer
+);
 
 function createCard(place) {
   const card = new Card(
     place,
-    user,
+    userInfo.getUserInfo(),
     elementsTemplate,
     ({ name, link }) => popupWithImage.open({ name, link }),
     // Передача данных о карточке и элементе карточки в попап
@@ -62,49 +72,33 @@ function createCard(place) {
     },
     (evt, cardId, likeCounter) => {
       if (!evt.target.classList.contains('element__fav_active')) {
-        api.addLike(cardId)
-        .then((updatedCard) => {likeCounter.textContent = updatedCard.likes.length})
-        .catch((err) => console.log(err));
+        api
+          .addLike(cardId)
+          .then((updatedCard) => {
+            likeCounter.textContent = updatedCard.likes.length;
+          })
+          .catch((err) => console.log(err));
       } else {
-        api.removeLike(cardId)
-        .then((updatedCard) => {likeCounter.textContent = updatedCard.likes.length})
-        .catch((err) => console.log(err));
+        api
+          .removeLike(cardId)
+          .then((updatedCard) => {
+            likeCounter.textContent = updatedCard.likes.length;
+          })
+          .catch((err) => console.log(err));
       }
-
       evt.target.classList.toggle('element__fav_active');
     }
   ).generateCard();
   return card;
 }
 
-const placeList = new Section(
-  {
-    items: cards,
-    renderer: (container, place) => {
-      container.append(createCard(place))
-    },
-  },
-  elementsContainer
-);
-
-const popupWithImage = new PopupWithImage(popupWithImageSelector);
-
-const popupWithUserInfo = new PopupWithForm(
-  popupProfileSelector,
-  ({ name, about }) => {
-    popupWithUserInfo.renderLoading(true);
-    api
-      .editUser({ name, about })
-      .then((user) => {
-        userInfo.setUserInfo(user);
-        popupWithUserInfo.close();
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        popupWithUserInfo.renderLoading(false);
-      });
-  }
-);
+popupWithUserInfoOpenButton.addEventListener('mousedown', () => {
+  const { name, about } = userInfo.getUserInfo();
+  nameInput.value = name;
+  jobInput.value = about;
+  profileFormValidation.setButtonState();
+  popupWithUserInfo.open();
+});
 
 const popupWithPlaceInfo = new PopupWithForm(
   popupPlaceSelector,
@@ -127,13 +121,32 @@ const popupWithPlaceInfo = new PopupWithForm(
   }
 );
 
+const popupWithImage = new PopupWithImage(popupWithImageSelector);
+
+const popupWithUserInfo = new PopupWithForm(
+  popupProfileSelector,
+  ({ name, about }) => {
+    popupWithUserInfo.renderLoading(true);
+    api
+      .editUser({ name, about })
+      .then((user) => {
+        userInfo.setUserInfo(user);
+        popupWithUserInfo.close();
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        popupWithUserInfo.renderLoading(false);
+      });
+  }
+);
+
 const popupWithNewAvatar = new PopupWithForm(
   popupNewAvatarSelector,
   (avatarObj) => {
+    popupWithNewAvatar.renderLoading(true);
     api
       .editUserAvatar(avatarObj)
       .then(() => {
-        popupWithNewAvatar.renderLoading(true);
         userInfo.setUserInfo(avatarObj);
         popupWithNewAvatar.close();
       })
@@ -143,45 +156,27 @@ const popupWithNewAvatar = new PopupWithForm(
       });
   }
 );
-
 const popupWithConfirm = new PopupWithConfirmation(
   popupConfirmSelector,
   (cardId, element) => {
-    api.removeCard(cardId)
-    .then(() => {
-      element.remove();
-      element = null;
-      popupWithConfirm.close();
-    })
-    .catch((err) => console.log(err));
+    api
+      .removeCard(cardId)
+      .then(() => {
+        element.remove();
+        element = null;
+        popupWithConfirm.close();
+      })
+      .catch((err) => console.log(err));
   }
 );
-
-// Рендер карточек, после получения всей информации с сервера
-Promise.all([user, cards]).then(()=> placeList.renderItems())
-
-popupWithUserInfoOpenButton.addEventListener('mousedown', () => {
-  user.then((user) => {
-    const { name, about } = userInfo.getUserInfo(user);
-    nameInput.value = name;
-    jobInput.value = about;
-    profileFormValidation.setButtonState();
-    popupWithUserInfo.open();
-  })
-  .catch((err) => console.log(err));
-});
-
 popupWithPlaceInfoOpenButton.addEventListener('click', () =>
   popupWithPlaceInfo.open()
 );
-
 edtiAvatarButton.addEventListener('mousedown', () => popupWithNewAvatar.open());
-
 popupWithUserInfo.setEventListeners();
 popupWithPlaceInfo.setEventListeners();
 popupWithImage.setEventListeners();
 popupWithNewAvatar.setEventListeners();
-
 //Валидация форм
 profileFormValidation.enableValidation();
 placeFormValidation.enableValidation();

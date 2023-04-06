@@ -10,7 +10,7 @@ import {
 export class Card {
   constructor(
     data,
-    getCurrentUser,
+    currentUser,
     templateSelector,
     openImagePopup,
     openConfirmPopup,
@@ -22,7 +22,7 @@ export class Card {
     this._likeHandler = likeHandler;
     this._cardId = data._id;
     this._ownerId = data.owner._id;
-    this._getCurrentUser = getCurrentUser;
+    this._currentUser = currentUser;
     this._templateSelector = templateSelector;
     this._openImagePopup = openImagePopup;
     this._openConfirmPopup = openConfirmPopup;
@@ -60,14 +60,14 @@ export class Card {
   }
 
   generateCard() {
-    this._getCurrentUser.then((user) => {
-      if (user._id === this._ownerId) {
+      if (this._currentUser.id === this._ownerId) {
         this._removeIcon.classList.remove('disabled');
       }
-      if (this._likes.find((el) => el._id === user._id)) {
+      if (this._likes.find((el) => el._id === this._currentUser.id)) {
+        
         this._favButton.classList.toggle('element__fav_active');
       }
-    });
+
     this._setEventListeners();
     this._image.src = this._link;
     this._image.alt = this._name;
