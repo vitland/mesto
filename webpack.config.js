@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: { main: './src/scripts/pages/index.js' },
+  entry: { main: './src/scripts/pages/index.ts' },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
@@ -32,6 +32,11 @@ module.exports = {
         exclude: '/node_modules/',
       },
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         // регулярное выражение, которое ищет все файлы с такими расширениями
         test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
         type: 'asset/resource',
@@ -51,6 +56,9 @@ module.exports = {
         ],
       },
     ]
+  },
+   resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
     new HtmlWebpackPlugin({

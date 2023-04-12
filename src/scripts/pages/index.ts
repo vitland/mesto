@@ -1,10 +1,10 @@
-import { Api } from '../components/Api.js';
+import { Api } from '../components/Api';
 import { Card } from '../components/Card.js';
 import { Section } from '../components/Seciton.js';
-import { UserInfo } from '../components/UserInfo.js';
+import { UserInfo } from '../components/UserInfo';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
-import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation';
 import { FormValidation } from '../components/FormValidation.js';
 import {
   elementsContainer,
@@ -62,6 +62,8 @@ const placeList = new Section(
   elementsContainer
 );
 
+
+
 function createCard(place) {
   const card = new Card(
     place,
@@ -96,6 +98,7 @@ function createCard(place) {
 
 popupWithUserInfoOpenButton.addEventListener('mousedown', () => {
   const { name, about } = userInfo.getUserInfo();
+  document.querySelector('.form__input_type_name');
   nameInput.value = name;
   jobInput.value = about;
   profileFormValidation.setButtonState();
