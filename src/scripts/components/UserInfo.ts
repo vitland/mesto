@@ -5,10 +5,10 @@ interface Selector {
 }
 
 interface User {
-  name: string;
-  about: string;
-  _id: string;
-  avatar: string;
+  name?: string;
+  about?: string;
+  _id?: string;
+  avatar?: string;
 }
 
 export class UserInfo {
@@ -24,7 +24,7 @@ export class UserInfo {
     this.user = { name: "", about: "", id: "", avatar: "" }
   }
 
-  setUserInfo(user: User): void {
+  setUserInfo(user: User) {
     if (user.name) {
       this._name.textContent = user.name;
       this.user.name = user.name;

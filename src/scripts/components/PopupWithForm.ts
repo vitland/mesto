@@ -1,27 +1,44 @@
 import { formSelector, inputListSelector, config } from '../utils/constants.js';
 import { Popup } from './Popup';
 
+interface Submit {
+  cardId?: string;
+  name?: string;
+  about?: string;
+  avatar?: string;
+  placeName?: string;
+  placeImage?: string;
+  _id?: string;
+}
+
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, handleSubmitForm) {
+  _form;
+  _inputList;
+  _submitButton;
+  _handleSubmitForm: (obj: Submit) => void;
+
+  constructor(popupSelector: string, handleSubmitForm: (obj: Submit) => void) {
     super(popupSelector);
     this._handleSubmitForm = handleSubmitForm;
-    this._form = this._popup.querySelector(formSelector);
+    this._form = this._popup.querySelector(formSelector) as HTMLFormElement;
     this._inputList = Array.from(this._form.querySelectorAll(inputListSelector));
     this._submitButton = this._form.querySelector(config.submitButtonSelector)
   }
 
-  _getInputValues() {
-    return this._inputList.reduce((acc, cur) => {
-      acc[cur.name] = cur.value;
-      return acc;
-    }, {});
+  _getInputValues(): Submit {
+    return this._inputList.reduce((acc, cur: HTMLInputElement) => {
+      return {
+        ...acc,
+        [cur.name]: cur.value
+      }
+    }, {} as Submit);
   }
 
-  renderLoading(isLoading){
-    if(isLoading){
+  renderLoading(isLoading: boolean) {
+    if (isLoading) {
       this._submitButton.textContent = 'Сохранение...'
-    }else {
-    this._submitButton.textContent = 'Сохранить'
+    } else {
+      this._submitButton.textContent = 'Сохранить'
     }
   }
 

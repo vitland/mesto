@@ -35,8 +35,6 @@ export const popupWithUserInfoOpenButton = document.querySelector(
   '.profile__button-change'
 );
 export const inputListSelector = '.form__input';
-export const nameInput = document.querySelector('.form__input_type_name');
-export const jobInput = document.querySelector('.form__input_type_occupation');
 // Кнопка и инпуты попап новое место
 export const popupWithPlaceInfoOpenButton = document.querySelector(
   '.profile__button-add'

@@ -1,16 +1,14 @@
 import { Api } from '../components/Api';
-import { Card } from '../components/Card.js';
-import { Section } from '../components/Seciton.js';
+import { Card } from '../components/Card';
+import { Section } from '../components/Seciton';
 import { UserInfo } from '../components/UserInfo';
-import { PopupWithImage } from '../components/PopupWithImage.js';
-import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithImage } from '../components/PopupWithImage';
+import { PopupWithForm } from '../components/PopupWithForm';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation';
-import { FormValidation } from '../components/FormValidation.js';
+import { FormValidation } from '../components/FormValidation';
 import {
   elementsContainer,
   elementsTemplate,
-  jobInput,
-  nameInput,
   placeForm,
   avatarForm,
   popupWithImageSelector,
@@ -54,17 +52,24 @@ Promise.all([api.getUser(), api.getCards()])
   .catch((err) => console.error(err));
 
 const placeList = new Section(
-  {
-    renderer: (container, place) => {
-      container.append(createCard(place));
-    },
-  },
+  (container:Element, place) => container.append(createCard(place)),
   elementsContainer
 );
 
 
+interface Place {
+  _id: string;
+  name: string;
+  link: string;
+  owner: {
+    _id: string
+  };
+  likes: {
+    _id: string
+  }[];
+}
 
-function createCard(place) {
+function createCard(place: Place) {
   const card = new Card(
     place,
     userInfo.getUserInfo(),
@@ -74,7 +79,7 @@ function createCard(place) {
     (cardId, element) => {
       popupWithConfirm.open(cardId, element);
     },
-    (evt, cardId, likeCounter) => {
+    (evt: Event & { target: Element }, cardId, likeCounter) => {
       if (!evt.target.classList.contains('element__fav_active')) {
         api
           .addLike(cardId)
@@ -98,9 +103,11 @@ function createCard(place) {
 
 popupWithUserInfoOpenButton.addEventListener('mousedown', () => {
   const { name, about } = userInfo.getUserInfo();
-  document.querySelector('.form__input_type_name');
-  nameInput.value = name;
-  jobInput.value = about;
+  //Тоже самое что as HTMLInputElement
+  const nInput = <HTMLInputElement>document.querySelector('.form__input_type_name');
+  const jInput = <HTMLInputElement>document.querySelector('.form__input_type_occupation');
+  nInput.value = name;
+  jInput.value = about;
   profileFormValidation.setButtonState();
   popupWithUserInfo.open();
 });
@@ -147,12 +154,12 @@ const popupWithUserInfo = new PopupWithForm(
 
 const popupWithNewAvatar = new PopupWithForm(
   popupNewAvatarSelector,
-  (avatarObj) => {
+  ({ avatar }) => {
     popupWithNewAvatar.renderLoading(true);
     api
-      .editUserAvatar(avatarObj)
+      .editUserAvatar({ avatar })
       .then(() => {
-        userInfo.setUserInfo(avatarObj);
+        userInfo.setUserInfo({ avatar });
         popupWithNewAvatar.close();
       })
       .catch((err) => console.log(err))
